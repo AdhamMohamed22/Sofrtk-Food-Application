@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#272727"
+    tools:context=".LoginFragment">
+
+    <ImageView
+        android:id="@+id/sofrtkLogo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/SOFRTK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/emailTextField"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edittext_customlayout"
+        android:drawableStart="@drawable/email"
+        android:drawablePadding="3dp"
+        android:drawableTint="@color/secondaryColor"
+        android:hint="@string/enter_your_e_mail"
+        android:padding="7dp"
+        android:textColorHint="@color/secondaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sofrtkLogo" />
+
+    <EditText
+        android:id="@+id/passwordTextField"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittext_customlayout"
+        android:drawableStart="@drawable/password"
+        android:drawablePadding="3dp"
+        android:drawableTint="@color/secondaryColor"
+        android:hint="@string/enter_your_password"
+        android:padding="7dp"
+        android:textColorHint="@color/secondaryColor"
+        app:layout_constraintStart_toStartOf="@+id/emailTextField"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextField" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="156dp"
+        android:backgroundTint="@color/secondaryColor"
+        android:text="@string/loginButton"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextField" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/don_t_have_an_account"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+    <TextView
+        android:id="@+id/RegisterTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="67dp"
+        android:text="@string/registerTxt"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <View
+        android:id="@+id/leftDivider"
+        android:layout_width="185dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="14dp"
+        android:background="?android:attr/listDivider"
+        android:backgroundTint="@color/white"
+        android:scrollbarSize="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <View
+        android:id="@+id/rightDivider"
+        android:layout_width="185dp"
+        android:layout_height="5dp"
+        android:background="?android:attr/listDivider"
+        android:backgroundTint="@color/white"
+        android:scrollbarSize="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/leftDivider" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="168dp"
+        app:cardBackgroundColor="@color/secondaryColor"
+        app:cardCornerRadius="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leftDivider">
+
+        <ImageView
+            android:id="@+id/google"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/google" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/or"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/rightDivider"
+        app:layout_constraintStart_toEndOf="@+id/leftDivider"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
