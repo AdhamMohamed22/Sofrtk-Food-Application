@@ -10,8 +10,8 @@
     <string name="enter_your_last_name">Enter Your Last Name</string>
     <string name="enter_your_e_mail">Enter Your E-mail</string>
     <string name="enter_your_password">Enter Your Password</string>
-    <string name="enter_your_mobile_number">Enter Your Mobile Number</string>
     <string name="already_have_an_account">Already have an account ?</string>
     <string name="don_t_have_an_account">Don\'t have an account ?</string>
     <string name="or">OR</string>
+    <string name="confirm_your_password">Confirm Your Password</string>
 </resources>

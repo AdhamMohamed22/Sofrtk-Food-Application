@@ -29,6 +29,7 @@
         android:hint="@string/enter_your_e_mail"
         android:padding="7dp"
         android:textColorHint="@color/secondaryColor"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sofrtkLogo" />
@@ -45,6 +46,7 @@
         android:hint="@string/enter_your_password"
         android:padding="7dp"
         android:textColorHint="@color/secondaryColor"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/emailTextField"
         app:layout_constraintTop_toBottomOf="@+id/emailTextField" />
 
