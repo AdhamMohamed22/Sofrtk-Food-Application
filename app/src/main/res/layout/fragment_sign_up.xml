@@ -29,6 +29,8 @@
         android:padding="7dp"
         android:textColorHint="@color/secondaryColor"
         android:textColor="@color/white"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sofrtkLogo" />
@@ -46,6 +48,8 @@
         android:padding="7dp"
         android:textColorHint="@color/secondaryColor"
         android:textColor="@color/white"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toStartOf="@+id/firstNameTextField"
         app:layout_constraintTop_toBottomOf="@+id/firstNameTextField" />
 
@@ -62,6 +66,8 @@
         android:padding="7dp"
         android:textColorHint="@color/secondaryColor"
         android:textColor="@color/white"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toStartOf="@+id/firstNameTextField"
         app:layout_constraintTop_toBottomOf="@+id/lastNameTextField" />
 
@@ -78,6 +84,8 @@
         android:padding="7dp"
         android:textColorHint="@color/secondaryColor"
         android:textColor="@color/white"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toStartOf="@+id/firstNameTextField"
         app:layout_constraintTop_toBottomOf="@+id/emailTextField" />
 
@@ -94,6 +102,8 @@
         android:padding="7dp"
         android:textColorHint="@color/secondaryColor"
         android:textColor="@color/white"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toStartOf="@+id/firstNameTextField"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextField" />
 
