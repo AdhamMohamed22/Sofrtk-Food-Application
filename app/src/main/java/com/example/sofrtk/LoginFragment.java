@@ -14,12 +14,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
     TextView RegisterTxt;
     EditText emailTextField;
     EditText passwordTextField;
     Button btnLogin;
+
+    boolean isValid = true;
+    FirebaseAuth auth;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -42,6 +51,8 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        auth = FirebaseAuth.getInstance();
+
         RegisterTxt = view.findViewById(R.id.RegisterTxt);
         RegisterTxt.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment);
@@ -52,13 +63,47 @@ public class LoginFragment extends Fragment {
         btnLogin = view.findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(v -> {
-            if (!Patterns.EMAIL_ADDRESS.matcher(emailTextField.getText().toString().trim()).matches()) {
-                emailTextField.setError("Invalid Email Format");
-            }
 
-            if(passwordTextField.getText().length()<6){
-                passwordTextField.setError("The Password Cannot Be Less Than 6 Characters");
+            isValid = true;
+
+            validateEmailEditText(emailTextField);
+            validateLengthEditText(passwordTextField,6);
+
+            if(isValid) {
+                login();
             }
         });
+    }
+
+    public void validateEmailEditText(EditText field){
+        if (!Patterns.EMAIL_ADDRESS.matcher(field.getText().toString().trim()).matches()) {
+            field.setError("Invalid Email Format");
+            isValid = false;
+        }
+    }
+
+    public void validateLengthEditText(EditText field,int length){
+        if(field.getText().length()<length){
+            field.setError("This Field Cannot Be Less Than " + length + " Characters");
+            isValid = false;
+        }
+    }
+
+    private void login(){
+        String email = emailTextField.getText().toString().trim();
+        String password = passwordTextField.getText().toString().trim();
+
+        auth.signInWithEmailAndPassword(email,password)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Toast.makeText(requireContext(), "log-in successful!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(requireContext(), "Failed log-in: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

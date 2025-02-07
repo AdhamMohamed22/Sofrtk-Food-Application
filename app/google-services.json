@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "550153787297",
+    "project_id": "sofretk-food-application",
+    "storage_bucket": "sofretk-food-application.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550153787297:android:3d3d5f6a2376d2fb615de0",
+        "android_client_info": {
+          "package_name": "com.example.sofrtk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0D0Zz7YG-UQG0PybQzgjAG03IM03E0y4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
