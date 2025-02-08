@@ -1,6 +1,7 @@
 package com.example.sofrtk.UI.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +15,10 @@ import com.example.sofrtk.Pojos.CategoryResponse;
 import com.example.sofrtk.Pojos.RandomMeal;
 import com.example.sofrtk.Pojos.RandomMealResponse;
 import com.example.sofrtk.R;
+import com.example.sofrtk.UI.Main.Home.HomeFragment;
 import com.example.sofrtk.UI.Main.Home.MyCategory;
 import com.example.sofrtk.UI.Main.Home.MyRandomMeal;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 

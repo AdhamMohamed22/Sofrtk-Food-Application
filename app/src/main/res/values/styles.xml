@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Bottom Navigation Style -->
+    <style name="BottomNavTheme" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/secondaryColor</item>
+        <item name="itemTextColor">@color/secondaryColor</item>
+    </style>
+
+</resources>
