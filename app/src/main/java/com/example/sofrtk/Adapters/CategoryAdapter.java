@@ -40,7 +40,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category currentCategory = categoriesList.get(position);
         holder.categoryNameTxt.setText(currentCategory.getCategoryTitle());
         holder.categoryDescriptionTxt.setText(currentCategory.getCategoryDescription());
-        Glide.with(context).load(currentCategory.getCategoryImage()).apply(new RequestOptions().override(250,250)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.categoryImageView);
+        Glide.with(context).load(currentCategory.getCategoryImage()).apply(new RequestOptions().override(225,225)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.categoryImageView);
     }
 
     @Override

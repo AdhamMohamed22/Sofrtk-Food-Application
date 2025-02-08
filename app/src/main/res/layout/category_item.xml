@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="35dp"
-    android:layout_marginTop="50dp"
-    android:layout_marginRight="35dp"
-    app:cardBackgroundColor="#ddd5d0"
-    app:cardCornerRadius="25dp"
-    app:cardElevation="50dp">
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="20dp"
+    app:cardBackgroundColor="@color/primaryColor"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="7dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/categoryImageView"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="225dp"
             android:adjustViewBounds="false"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
@@ -34,7 +34,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/primaryColor"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,8 +48,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="sans-serif-condensed"
-            android:maxLines="3"
-            android:textColor="@color/primaryColor"
+            android:maxLines="4"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold|italic"
             android:visibility="visible"

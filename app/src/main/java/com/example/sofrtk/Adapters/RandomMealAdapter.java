@@ -40,7 +40,7 @@ public class RandomMealAdapter extends RecyclerView.Adapter<RandomMealAdapter.Ra
         holder.mealNameTxt.setText(currentRandomMeal.getMealTitle());
         holder.mealCategoryTxt.setText(currentRandomMeal.getMealCategory());
         holder.mealAreaTxt.setText(currentRandomMeal.getMealArea());
-        Glide.with(context).load(currentRandomMeal.getMealImage()).apply(new RequestOptions().override(250,250)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.mealImageView);
+        Glide.with(context).load(currentRandomMeal.getMealImage()).apply(new RequestOptions().override(200,200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.mealImageView);
     }
 
     @Override
