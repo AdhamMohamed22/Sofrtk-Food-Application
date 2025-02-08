@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="35dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginRight="35dp"
+    app:cardBackgroundColor="#ddd5d0"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="50dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="15dp">
+
+        <ImageView
+            android:id="@+id/categoryImageView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:adjustViewBounds="false"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/categoryNameTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/primaryColor"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categoryImageView"
+            tools:text="Category Name" />
+
+        <TextView
+            android:id="@+id/categoryDescriptionTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:maxLines="3"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:textStyle="bold|italic"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/categoryNameTxt"
+            app:layout_constraintTop_toBottomOf="@+id/categoryNameTxt"
+            tools:text="Category Description" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

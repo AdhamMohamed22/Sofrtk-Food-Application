@@ -1,4 +1,4 @@
-package com.example.sofrtk;
+package com.example.sofrtk.UI.Start.Auth.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sofrtk.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,25 +31,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.lang.reflect.Array;
-
-public class SignUpFragment extends Fragment {
-    TextView loginTxt;
-    EditText firstNameTextField;
-    EditText lastNameTextField;
+public class LoginFragment extends Fragment {
+    TextView RegisterTxt;
     EditText emailTextField;
     EditText passwordTextField;
-    EditText confirmPasswordTextField;
-    Button btnRegister;
+    Button btnLogin;
     CardView googleCardView;
 
     boolean isValid = true;
     private FirebaseAuth auth;
     private GoogleSignInClient googleSignInClient;
 
-    public SignUpFragment() {
+
+    public LoginFragment() {
         // Required empty public constructor
     }
 
@@ -62,7 +60,7 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
@@ -78,55 +76,36 @@ public class SignUpFragment extends Fragment {
 
         googleSignInClient = GoogleSignIn.getClient(getActivity(),gso);
 
-        googleCardView = view.findViewById(R.id.googleCardView);
+        googleCardView = view.findViewById(R.id.cardView);
         googleCardView.setOnClickListener(v -> {
-            signUpGoogle();
+            loginGoogle();
         });
 
-        loginTxt = view.findViewById(R.id.loginTxt);
-        loginTxt.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment);
+        RegisterTxt = view.findViewById(R.id.RegisterTxt);
+        RegisterTxt.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment);
         });
 
-        firstNameTextField = view.findViewById(R.id.firstNameTextField);
-        lastNameTextField = view.findViewById(R.id.lastNameTextField);
         emailTextField = view.findViewById(R.id.emailTextField);
         passwordTextField = view.findViewById(R.id.passwordTextField);
-        confirmPasswordTextField = view.findViewById(R.id.confirmPasswordTextField);
-        btnRegister = view.findViewById(R.id.btnRegister);
+        btnLogin = view.findViewById(R.id.btnLogin);
 
-        EditText[] editTextFields = {firstNameTextField,lastNameTextField,emailTextField,passwordTextField,confirmPasswordTextField};
-        btnRegister.setOnClickListener(v -> {
+        btnLogin.setOnClickListener(v -> {
 
             isValid = true;
 
-            for(int i=0;i<5;i++){
-                validateEmptyEditText(editTextFields[i]);
-            }
-
-            validateLengthEditText(firstNameTextField,3);
-            validateLengthEditText(lastNameTextField,3);
-            validateLengthEditText(passwordTextField,6);
-            validateLengthEditText(confirmPasswordTextField,6);
             validateEmailEditText(emailTextField);
+            validateLengthEditText(passwordTextField,6);
 
-            if(passwordTextField.getText().length()>=6 && confirmPasswordTextField.getText().length()>=6){
-                if(!passwordTextField.getText().toString().equals(confirmPasswordTextField.getText().toString())){
-                    confirmPasswordTextField.setError("Password Must Be The Same");
-                    isValid = false;
-                }
-            }
-
-            if(isValid){
-                signup();
+            if(isValid) {
+                login();
             }
         });
-
-
     }
-    public void validateEmptyEditText(EditText field){
-        if(field.getText().toString().trim().isEmpty()){
-            field.setError("This Field Cannot Be Empty");
+
+    public void validateEmailEditText(EditText field){
+        if (!Patterns.EMAIL_ADDRESS.matcher(field.getText().toString().trim()).matches()) {
+            field.setError("Invalid Email Format");
             isValid = false;
         }
     }
@@ -138,32 +117,25 @@ public class SignUpFragment extends Fragment {
         }
     }
 
-    public void validateEmailEditText(EditText field){
-        if (!Patterns.EMAIL_ADDRESS.matcher(field.getText().toString().trim()).matches()) {
-            field.setError("Invalid Email Format");
-            isValid = false;
-        }
-    }
-
-    private void signup(){
+    private void login(){
         String email = emailTextField.getText().toString().trim();
         String password = passwordTextField.getText().toString().trim();
 
-        auth.createUserWithEmailAndPassword(email,password)
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(getActivity(), "Sign-up successful!", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "Failed Sign up: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
+        auth.signInWithEmailAndPassword(email,password)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Toast.makeText(getActivity(), "log-in successful!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "Failed log-in: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
-    private void signUpGoogle(){
+    private void loginGoogle(){
         Intent loginIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(loginIntent,123);
     }
@@ -176,26 +148,26 @@ public class SignUpFragment extends Fragment {
 
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                signUpWithWithGoogle(account.getIdToken());
+                loginWithGoogle(account.getIdToken());
             } catch (ApiException e) {
 
             }
         }
     }
 
-    private void signUpWithWithGoogle(String idToken){
+    private void loginWithGoogle(String idToken){
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
         auth.signInWithCredential(credential)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(getActivity(), "Sign-up With Google successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "log-in With Google successful!", Toast.LENGTH_SHORT).show();
                         //Log.i("TAG", "onSuccess: " + authResult.getUser().getDisplayName());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Failed Sign-up With Google: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Failed log-in With Google: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -214,9 +186,4 @@ public class SignUpFragment extends Fragment {
             }
         });
     }
-
-    private void logout(){
-        auth.signOut();
-    }
-
 }

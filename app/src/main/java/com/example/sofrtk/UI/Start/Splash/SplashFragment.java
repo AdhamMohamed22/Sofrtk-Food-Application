@@ -1,4 +1,4 @@
-package com.example.sofrtk;
+package com.example.sofrtk.UI.Start.Splash;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -17,6 +17,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.sofrtk.R;
 
 public class SplashFragment extends Fragment {
     ImageView logo;

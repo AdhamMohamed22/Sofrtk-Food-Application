@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
-    tools:context=".SignUpFragment">
+    tools:context=".UI.Start.Auth.SignUp.SignUpFragment">
 
     <ImageView
         android:id="@+id/sofrtkLogo"
@@ -200,7 +200,7 @@
         app:layout_constraintTop_toTopOf="@+id/googleCardView">
 
         <ImageView
-            android:id="@+id/guest"
+            android:id="@+id/foodCategoryCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/guest" />
