@@ -9,5 +9,22 @@
         android:id="@+id/homeFragment"
         android:name="com.example.sofrtk.UI.Main.Home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailedMealFragment"
+            app:destination="@id/detailedMealFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedMealFragment"
+        android:name="com.example.sofrtk.UI.Main.MealDetails.DetailedMealFragment"
+        android:label="fragment_detailed_meal"
+        tools:layout="@layout/fragment_detailed_meal" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="meal"
+            app:argType="com.example.sofrtk.Pojos.RandomMeal"
+            app:nullable="true" />
+    </fragment>
 </navigation>

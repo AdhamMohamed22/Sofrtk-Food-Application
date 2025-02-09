@@ -2,7 +2,11 @@ package com.example.sofrtk.Pojos;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
+    @SerializedName("idCategory")
+    String categoryId;
     @SerializedName("strCategoryThumb")
     String categoryImage;
     @SerializedName("strCategory")
@@ -10,10 +14,15 @@ public class Category {
     @SerializedName("strCategoryDescription")
     String categoryDescription;
 
-    public Category(String categoryImage, String categoryTitle, String categoryDescription) {
+    public Category(String categoryId,String categoryImage, String categoryTitle, String categoryDescription) {
+        this.categoryId = categoryId;
         this.categoryImage = categoryImage;
         this.categoryTitle = categoryTitle;
         this.categoryDescription = categoryDescription;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
     }
 
     public String getCategoryImage() {
@@ -26,6 +35,10 @@ public class Category {
 
     public String getCategoryDescription() {
         return categoryDescription;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public void setCategoryImage(String categoryImage) {

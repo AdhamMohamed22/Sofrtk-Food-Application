@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +21,6 @@ import com.example.sofrtk.Pojos.CategoryResponse;
 import com.example.sofrtk.Pojos.RandomMeal;
 import com.example.sofrtk.Pojos.RandomMealResponse;
 import com.example.sofrtk.R;
-import com.example.sofrtk.UI.Main.MainActivity;
 
 import java.util.ArrayList;
 
@@ -75,6 +75,10 @@ public class HomeFragment extends Fragment {
                 randomMealRecyclerView.setAdapter(randomMealAdapter);
                 randomMealAdapter.notifyDataSetChanged();
                 Log.i("TAG", "onResponse: " + response.body());
+                randomMealAdapter.setOnItemClickListener(randomMeal -> {
+                    int id = Integer.parseInt(randomMeal.getIdMeal());
+                    navigateToDetailed(id,randomMeal);
+                });
             }
 
             @Override
@@ -102,6 +106,9 @@ public class HomeFragment extends Fragment {
                 categoryRecyclerView.setAdapter(categoryAdapter);
                 categoryAdapter.notifyDataSetChanged();
                 Log.i("TAG", "onResponse: " + response.body());
+                categoryAdapter.setOnItemClickListener(id -> {
+                    navigateToDetailed(id,null);
+                });
             }
 
             @Override
@@ -114,5 +121,9 @@ public class HomeFragment extends Fragment {
         categoryLinearLayoutManager = new LinearLayoutManager(getActivity());
         categoryLinearLayoutManager.setOrientation(categoryLinearLayoutManager.HORIZONTAL);
         categoryRecyclerView.setLayoutManager(categoryLinearLayoutManager);
+    }
+
+    public void navigateToDetailed(int id,RandomMeal randomMeal){
+        Navigation.findNavController(requireView()).navigate(HomeFragmentDirections.actionHomeFragmentToDetailedMealFragment(id,randomMeal));
     }
 }

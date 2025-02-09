@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -44,8 +45,8 @@ dependencies {
     // Google FireBase Authentication
     implementation 'com.google.android.gms:play-services-auth:21.0.0'
     // Navigation Component
-    implementation "androidx.navigation:navigation-fragment:2.5.3"
-    implementation "androidx.navigation:navigation-ui:2.5.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.4"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.4"
     // Lottie
     implementation 'com.airbnb.android:lottie:5.0.3'
     // Retrofit
