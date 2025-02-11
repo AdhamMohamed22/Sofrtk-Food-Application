@@ -20,4 +20,13 @@
     <string name="ingrident">Ingrident</string>
     <string name="meal_name">Meal Name</string>
     <string name="meal_area">Meal Area</string>
+    <string name="my_plan">My Plan</string>
+    <string name="thursday">Thursday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="monday">Monday</string>
+    <string name="sunday">Sunday</string>
+    <string name="saturday">Saturday</string>
+    <string name="friday">Friday</string>
+    <string name="plan_meal_name">Plan Meal Name</string>
 </resources>

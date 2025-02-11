@@ -61,8 +61,8 @@ public class IngridentAdapter extends RecyclerView.Adapter<IngridentAdapter.Ingr
 
         public IngridentViewHolder(@NonNull View itemView) {
             super(itemView);
-            ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
-            ingridentNameTxt = itemView.findViewById(R.id.ingridentNameTxt);
+            ingredientImageView = itemView.findViewById(R.id.planMealImageView);
+            ingridentNameTxt = itemView.findViewById(R.id.planMealNameTxt);
             measureNameTxt = itemView.findViewById(R.id.measureNameTxt);
         }
     }
