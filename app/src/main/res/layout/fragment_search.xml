@@ -26,10 +26,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <SearchView
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:searchIcon="@drawable/search_icon" />
+                app:searchIcon="@drawable/search_icon" />
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.chip.ChipGroup

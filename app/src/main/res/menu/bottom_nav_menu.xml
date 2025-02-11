@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/home_icon"
         android:title="Home"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/nav_search"
+        android:id="@+id/searchFragment"
         android:icon="@drawable/search_icon"
         android:title="Search"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/nav_favourite"
+        android:id="@+id/favouriteFragment"
         android:icon="@drawable/favourite_icon"
         android:title="Favourite"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/nav_plan"
+        android:id="@+id/planFragment"
         android:icon="@drawable/plan_icon"
         android:title="Plan"
         app:showAsAction="ifRoom"/>
