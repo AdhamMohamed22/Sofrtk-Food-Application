@@ -7,4 +7,9 @@
         <item name="itemTextColor">@color/secondaryColor</item>
     </style>
 
+    <style name="CircleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

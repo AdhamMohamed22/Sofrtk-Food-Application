@@ -21,6 +21,7 @@ import com.example.sofrtk.Pojos.CategoryResponse;
 import com.example.sofrtk.Pojos.RandomMeal;
 import com.example.sofrtk.Pojos.RandomMealResponse;
 import com.example.sofrtk.R;
+import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.util.ArrayList;
 
@@ -36,8 +37,7 @@ public class HomeFragment extends Fragment {
     ArrayList<RandomMeal> randomMealsList = new ArrayList<>();
     private static final String BaseUrl = "https://www.themealdb.com/api/json/v1/1/";
 
-    RecyclerView categoryRecyclerView;
-    LinearLayoutManager categoryLinearLayoutManager;
+    CarouselRecyclerview categoryRecyclerView;
     ArrayList<Category> categoriesList = new ArrayList<>();
 
     public HomeFragment() {
@@ -104,6 +104,8 @@ public class HomeFragment extends Fragment {
                 categoriesList = response.body().categoriesList;
                 CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(),categoriesList);
                 categoryRecyclerView.setAdapter(categoryAdapter);
+                categoryRecyclerView.setAlpha(true);
+                categoryRecyclerView.setInfinite(false);
                 categoryAdapter.notifyDataSetChanged();
                 Log.i("TAG", "onResponse: " + response.body());
                 categoryAdapter.setOnItemClickListener(id -> {
@@ -118,9 +120,7 @@ public class HomeFragment extends Fragment {
         });
 
         categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
-        categoryLinearLayoutManager = new LinearLayoutManager(getActivity());
-        categoryLinearLayoutManager.setOrientation(categoryLinearLayoutManager.HORIZONTAL);
-        categoryRecyclerView.setLayoutManager(categoryLinearLayoutManager);
+
     }
 
     public void navigateToDetailed(int id,RandomMeal randomMeal){
