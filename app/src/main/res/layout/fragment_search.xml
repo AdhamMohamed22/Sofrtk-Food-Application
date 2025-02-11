@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
+    android:background="@color/white"
     android:fillViewport="true"
     tools:context=".UI.Main.Search.SearchFragment">
 
@@ -13,17 +13,66 @@
         android:layout_height="match_parent"
         android:paddingBottom="75dp">
 
-        <SearchView
-            android:id="@+id/searchView"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/searchCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@color/white"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/primaryColor"
+            app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:searchIcon="@drawable/search_icon" />
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchCardView"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/categoryChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textColor="@color/secondaryColor"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/primaryColor"
+                app:chipCornerRadius="25dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/countryChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/country"
+                android:textColor="@color/secondaryColor"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/primaryColor"
+                app:chipCornerRadius="25dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/ingridentChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ingrident"
+                android:textColor="@color/secondaryColor"
+                android:textSize="16sp"
+                app:chipBackgroundColor="@color/primaryColor"
+                app:chipCornerRadius="25dp" />
+
+        </com.google.android.material.chip.ChipGroup>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoryRecyclerView"
@@ -31,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchView" />
+            app:layout_constraintTop_toBottomOf="@id/chipGroup" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/countryRecyclerView"

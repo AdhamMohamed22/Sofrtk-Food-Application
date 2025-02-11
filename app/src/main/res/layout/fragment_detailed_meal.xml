@@ -18,20 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_launcher_background" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/detailedMealNameTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="Meal Name"
-            android:textColor="@color/black"
+            android:text="@string/meal_name"
+            android:textColor="@color/primaryColor"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailedMealImage" />
@@ -42,11 +45,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="Meal Area"
-            android:textColor="@color/black"
+            android:text="@string/meal_area"
+            android:textColor="@color/primaryColor"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/detailedMealNameTxt"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailedMealNameTxt" />
 
         <View
@@ -114,40 +119,39 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/favouriteCardView"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
             app:cardBackgroundColor="@color/primaryColor"
             app:cardCornerRadius="250dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailedMealImage">
+            app:layout_constraintBottom_toBottomOf="@+id/divider"
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
                 android:id="@+id/favourite"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/favourite_icon" />
+                android:src="@drawable/blank_favourite" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/unfavouriteCardView"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="40dp"
+            android:id="@+id/bookmarkCardView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="5dp"
             app:cardBackgroundColor="@color/primaryColor"
             app:cardCornerRadius="250dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailedMealImage">
+            app:layout_constraintTop_toTopOf="@+id/favouriteCardView">
 
             <ImageView
-                android:id="@+id/unfavourite"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:id="@+id/bookmark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/unfavourite_icon" />
+                android:src="@drawable/blank_bookmark" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

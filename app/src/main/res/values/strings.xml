@@ -15,4 +15,9 @@
     <string name="or">OR</string>
     <string name="confirm_your_password">Confirm Your Password</string>
     <string name="default_web_client_id">550153787297-30tp2t4tfc8qejbegabi366ppe9ogbrc.apps.googleusercontent.com</string>
+    <string name="category">Category</string>
+    <string name="country">Country</string>
+    <string name="ingrident">Ingrident</string>
+    <string name="meal_name">Meal Name</string>
+    <string name="meal_area">Meal Area</string>
 </resources>
