@@ -3,10 +3,13 @@ package com.example.sofrtk.Network;
 import com.example.sofrtk.Models.DTOs.CategoryResponse;
 import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FoodRemoteDataSource {
@@ -16,6 +19,7 @@ public class FoodRemoteDataSource {
 
     private FoodRemoteDataSource(){
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .baseUrl(BaseUrl)
                 .build();
 
@@ -29,33 +33,11 @@ public class FoodRemoteDataSource {
         return foodRemoteDataSource;
     }
 
-    public void getRandomMeal(NetworkCallBack networkCallBack){
-        apiDataService.getRandomMeal().enqueue(new Callback<RandomMealResponse>() {
-            @Override
-            public void onResponse(Call<RandomMealResponse> call, Response<RandomMealResponse> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    networkCallBack.onRandomMealSuccess(response.body().getRandomMealList());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RandomMealResponse> call, Throwable t) {
-                networkCallBack.onRandomMealFailure(t.getMessage().toString());
-            }
-        });
+    public Single<RandomMealResponse> getRandomMeal(){
+        return apiDataService.getRandomMeal();
     }
 
-    public void getCategories(NetworkCallBack networkCallBack){
-        apiDataService.getCategories().enqueue(new Callback<CategoryResponse>() {
-            @Override
-            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-                networkCallBack.onCategoriesSuccess(response.body().categoriesList);
-            }
-
-            @Override
-            public void onFailure(Call<CategoryResponse> call, Throwable t) {
-                networkCallBack.onCategoriesFailure(t.getMessage().toString());
-            }
-        });
+    public Observable<CategoryResponse> getCategories(){
+        return apiDataService.getCategories();
     }
 }
