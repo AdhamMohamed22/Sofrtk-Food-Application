@@ -1,6 +1,7 @@
 package com.example.sofrtk.Network;
 
 import com.example.sofrtk.Models.DTOs.CategoryResponse;
+import com.example.sofrtk.Models.DTOs.CountryResponse;
 import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -39,5 +40,8 @@ public class FoodRemoteDataSource {
 
     public Observable<CategoryResponse> getCategories(){
         return apiDataService.getCategories();
+    }
+    public Observable<CountryResponse> getCountries(){
+        return apiDataService.getCountries("list");
     }
 }

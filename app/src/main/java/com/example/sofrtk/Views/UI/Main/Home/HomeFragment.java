@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
     @Override
     public void showRandomMealError(String errorMsg) {
-        Toast.makeText(getActivity(),errorMsg.toString(),Toast.LENGTH_LONG);
+        Toast.makeText(getActivity(),errorMsg,Toast.LENGTH_LONG);
     }
 
     @Override
