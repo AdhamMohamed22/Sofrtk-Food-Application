@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#272727"
-    tools:context=".UI.Start.Auth.Login.LoginFragment">
+    tools:context=".Views.UI.Start.Auth.Login.LoginFragment">
 
     <ImageView
         android:id="@+id/sofrtkLogo"
