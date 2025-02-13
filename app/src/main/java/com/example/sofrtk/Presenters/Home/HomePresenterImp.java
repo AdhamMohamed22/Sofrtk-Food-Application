@@ -1,16 +1,12 @@
 package com.example.sofrtk.Presenters.Home;
 
-import android.util.Log;
-
-import com.example.sofrtk.Models.DTOs.Category;
-import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.Repository.Repository;
-import com.example.sofrtk.Network.NetworkCallBack;
 import com.example.sofrtk.Views.UI.Main.Home.HomeView;
 
-import java.util.ArrayList;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class HomePresenterImp implements HomePresenter, NetworkCallBack {
+public class HomePresenterImp implements HomePresenter {
     HomeView homeView;
     Repository repository;
 
@@ -20,30 +16,25 @@ public class HomePresenterImp implements HomePresenter, NetworkCallBack {
     }
 
     @Override
-    public void getRandomMeal() {
-        repository.getRandomMeal(this);
+    public void setRandomMeal(){
+        repository.getRandomMeal()
+                .subscribeOn(Schedulers.io())
+                .map(randomMealResponse -> randomMealResponse.randomMealsList)
+                .repeat(3)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        randomMeal -> homeView.showRandomMeal(randomMeal),
+                        error -> {homeView.showRandomMealError(error.getMessage());});
     }
 
     @Override
-    public void getCategories() { repository.getCategories(this); }
-
-    @Override
-    public void onRandomMealSuccess(ArrayList<RandomMeal> randomMealList) {
-        homeView.showRandomMeal(randomMealList);
-    }
-
-    @Override
-    public void onRandomMealFailure(String errorMsg) {
-        homeView.showRandomMealError(errorMsg);
-    }
-
-    @Override
-    public void onCategoriesSuccess(ArrayList<Category> categoriesList) {
-        homeView.showCategories(categoriesList);
-    }
-
-    @Override
-    public void onCategoriesFailure(String errorMsg) {
-        homeView.showCategoriesError(errorMsg);
+    public void setCategories() {
+        repository.getCategories()
+                .subscribeOn(Schedulers.io())
+                .map(categoryResponse -> categoryResponse.categoriesList)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        categories -> homeView.showCategories(categories),
+                        error -> homeView.showCategoriesError(error.getMessage()));
     }
 }

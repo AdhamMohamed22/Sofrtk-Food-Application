@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Presenters.Home.HomePresenterImp;
 import com.example.sofrtk.Views.Adapters.CategoryAdapter;
@@ -24,6 +25,10 @@ import com.example.sofrtk.R;
 import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.util.ArrayList;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment implements HomeView {
     HomePresenterImp homePresenter;
@@ -55,6 +60,10 @@ public class HomeFragment extends Fragment implements HomeView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        homePresenter = new HomePresenterImp(this, Repository.getInstance());
+        homePresenter.setRandomMeal();
+        homePresenter.setCategories();
+
         randomMealRecyclerView = view.findViewById(R.id.randomMealRecyclerView);
         categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
 
@@ -63,28 +72,29 @@ public class HomeFragment extends Fragment implements HomeView {
         randomMealRecyclerView.setLayoutManager(mealLinearLayoutManager);
         randomMealAdapter = new RandomMealAdapter(getActivity(),randomMealsList);
         randomMealRecyclerView.setAdapter(randomMealAdapter);
-        homePresenter = new HomePresenterImp(this, Repository.getInstance());
-        homePresenter.getRandomMeal();
-
-
-        categoryAdapter = new CategoryAdapter(getActivity(),categoriesList);
-        categoryRecyclerView.setAdapter(categoryAdapter);
-        categoryRecyclerView.setAlpha(true);
-        categoryRecyclerView.setInfinite(false);
-        homePresenter = new HomePresenterImp(this,Repository.getInstance());
-        homePresenter.getCategories();
-
-    }
-
-    @Override
-    public void showRandomMeal(ArrayList<RandomMeal> randomMealList) {
-        randomMealAdapter.updateData(randomMealList);
         randomMealAdapter.setOnItemClickListener(new RandomMealAdapter.OnItemClickListener() {
             @Override
             public void onClicks(RandomMeal randomMeal) {
                 navigateToDetailedMealFragment(Integer.parseInt(randomMeal.getIdMeal()),randomMeal);
             }
         });
+
+        categoryAdapter = new CategoryAdapter(getActivity(),categoriesList);
+        categoryRecyclerView.setAdapter(categoryAdapter);
+        categoryRecyclerView.setAlpha(true);
+        categoryRecyclerView.setInfinite(false);
+        categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
+            @Override
+            public void onClicks(int id) {
+                navigateToDetailedMealFragment(id,null);
+            }
+        });
+
+    }
+
+    @Override
+    public void showRandomMeal(ArrayList<RandomMeal> randomMealList) {
+        randomMealAdapter.updateData(randomMealList);
     }
 
     @Override
@@ -95,12 +105,6 @@ public class HomeFragment extends Fragment implements HomeView {
     @Override
     public void showCategories(ArrayList<Category> categoriesList) {
         categoryAdapter.updateData(categoriesList);
-        categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
-            @Override
-            public void onClicks(int id) {
-                navigateToDetailedMealFragment(id,null);
-            }
-        });
     }
 
     @Override

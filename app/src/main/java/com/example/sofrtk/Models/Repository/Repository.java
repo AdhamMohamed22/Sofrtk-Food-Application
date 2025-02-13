@@ -1,7 +1,11 @@
 package com.example.sofrtk.Models.Repository;
 
+import com.example.sofrtk.Models.DTOs.CategoryResponse;
+import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 import com.example.sofrtk.Network.FoodRemoteDataSource;
-import com.example.sofrtk.Network.NetworkCallBack;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class Repository {
     public static Repository repository = null;
@@ -17,13 +21,13 @@ public class Repository {
         return repository;
     }
 
-    public void getRandomMeal(NetworkCallBack networkCallBack){
-        foodRemoteDataSource.getRandomMeal(networkCallBack);
+    public Single<RandomMealResponse> getRandomMeal(){
+        return foodRemoteDataSource.getRandomMeal();
     }
 
 
-    public void getCategories(NetworkCallBack networkCallBack){
-        foodRemoteDataSource.getCategories(networkCallBack);
+    public Observable<CategoryResponse> getCategories(){
+        return foodRemoteDataSource.getCategories();
     }
 
 }
