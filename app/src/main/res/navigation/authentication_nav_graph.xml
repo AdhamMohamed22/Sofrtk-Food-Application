@@ -6,7 +6,7 @@
     app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.sofrtk.UI.Start.Auth.SignUp.SignUpFragment"
+        android:name="com.example.sofrtk.Views.UI.Start.Auth.SignUp.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.sofrtk.UI.Start.Auth.Login.LoginFragment"
+        android:name="com.example.sofrtk.Views.UI.Start.Auth.Login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.sofrtk.UI.Start.Splash.SplashFragment"
+        android:name="com.example.sofrtk.Views.UI.Start.Splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action

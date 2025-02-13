@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.sofrtk.UI.Main.Home.HomeFragment"
+        android:name="com.example.sofrtk.Views.UI.Main.Home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedMealFragment"
-        android:name="com.example.sofrtk.UI.Main.MealDetails.DetailedMealFragment"
+        android:name="com.example.sofrtk.Views.UI.Main.MealDetails.DetailedMealFragment"
         android:label="fragment_detailed_meal"
         tools:layout="@layout/fragment_detailed_meal" >
         <argument
@@ -24,22 +24,22 @@
             app:argType="integer" />
         <argument
             android:name="meal"
-            app:argType="com.example.sofrtk.Pojos.RandomMeal"
+            app:argType="com.example.sofrtk.Models.DTOs.RandomMeal"
             app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.sofrtk.UI.Main.Search.SearchFragment"
+        android:name="com.example.sofrtk.Views.UI.Main.Search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.example.sofrtk.UI.Main.Favourite.FavouriteFragment"
+        android:name="com.example.sofrtk.Views.UI.Main.Favourite.FavouriteFragment"
         android:label="fragment_favourite"
         tools:layout="@layout/fragment_favourite" />
     <fragment
         android:id="@+id/planFragment"
-        android:name="com.example.sofrtk.UI.Main.Plan.PlanFragment"
+        android:name="com.example.sofrtk.Views.UI.Main.Plan.PlanFragment"
         android:label="fragment_plan"
         tools:layout="@layout/fragment_plan" />
 </navigation>
