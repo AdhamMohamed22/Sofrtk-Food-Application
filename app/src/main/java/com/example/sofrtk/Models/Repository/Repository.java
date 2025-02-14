@@ -2,6 +2,7 @@ package com.example.sofrtk.Models.Repository;
 
 import com.example.sofrtk.Models.DTOs.CategoryResponse;
 import com.example.sofrtk.Models.DTOs.CountryResponse;
+import com.example.sofrtk.Models.DTOs.IngredientResponse;
 import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 import com.example.sofrtk.Network.FoodRemoteDataSource;
 
@@ -32,6 +33,9 @@ public class Repository {
 
     public Observable<CountryResponse> getCountries(){
         return foodRemoteDataSource.getCountries();
+    }
+    public Observable<IngredientResponse> getIngredients(){
+        return foodRemoteDataSource.getIngredients();
     }
 
 }

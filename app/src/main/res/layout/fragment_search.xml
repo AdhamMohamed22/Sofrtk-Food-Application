@@ -47,6 +47,7 @@
                 android:id="@+id/categoryChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:text="@string/category"
                 android:textColor="@color/secondaryColor"
                 android:textSize="16sp"
@@ -57,6 +58,7 @@
                 android:id="@+id/countryChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:text="@string/country"
                 android:textColor="@color/secondaryColor"
                 android:textSize="16sp"
@@ -64,10 +66,11 @@
                 app:chipCornerRadius="25dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/ingridentChip"
+                android:id="@+id/ingredientChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ingrident"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:text="Ingredient"
                 android:textColor="@color/secondaryColor"
                 android:textSize="16sp"
                 app:chipBackgroundColor="@color/primaryColor"
@@ -75,29 +78,16 @@
 
         </com.google.android.material.chip.ChipGroup>
 
-        <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
-            android:id="@+id/categoryRecyclerView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:orientation="vertical"
+            app:spanCount="3"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chipGroup" />
-
-        <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
-            android:id="@+id/countryRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/categoryRecyclerView" />
-
-        <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
-            android:id="@+id/ingredietsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/countryRecyclerView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

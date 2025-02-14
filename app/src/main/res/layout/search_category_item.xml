@@ -2,13 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/countryCard"
+    android:id="@+id/searchCategoryCard"
     android:layout_width="130dp"
     android:layout_height="130dp"
     android:layout_margin="3dp"
     app:cardBackgroundColor="@color/primaryColor"
-    app:cardCornerRadius="100dp"
-    app:cardElevation="10dp">
+    app:cardCornerRadius="0dp"
+    app:cardElevation="7dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,21 +16,19 @@
         android:elevation="15dp">
 
         <ImageView
-            android:id="@+id/countryImageView"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
+            android:id="@+id/searchCategoryImageView"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="10dp"
             android:adjustViewBounds="false"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/countryNameTxt"
+            android:id="@+id/searchCategoryNameTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
@@ -39,8 +37,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/countryImageView"
-            tools:text="@string/country_name" />
+            app:layout_constraintTop_toBottomOf="@+id/searchCategoryImageView"
+            tools:text="Category Name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

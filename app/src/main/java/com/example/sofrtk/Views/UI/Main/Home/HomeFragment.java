@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Presenters.Home.HomePresenterImp;
 import com.example.sofrtk.Views.Adapters.CategoryAdapter;
@@ -25,10 +24,6 @@ import com.example.sofrtk.R;
 import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.util.ArrayList;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment implements HomeView {
     HomePresenterImp homePresenter;
@@ -65,7 +60,7 @@ public class HomeFragment extends Fragment implements HomeView {
         homePresenter.setCategories();
 
         randomMealRecyclerView = view.findViewById(R.id.randomMealRecyclerView);
-        categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
+        categoryRecyclerView = view.findViewById(R.id.searchRecyclerView);
 
         mealLinearLayoutManager = new LinearLayoutManager(getActivity());
         mealLinearLayoutManager.setOrientation(mealLinearLayoutManager.HORIZONTAL);

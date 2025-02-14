@@ -15,12 +15,12 @@ import com.example.sofrtk.R;
 
 import java.util.ArrayList;
 
-public class IngridentAdapter extends RecyclerView.Adapter<IngridentAdapter.IngridentViewHolder> {
+public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngridentViewHolder> {
     Context context;
     ArrayList<String> ingridentsList;
     ArrayList<String> measuresList;
 
-    public IngridentAdapter(Context context, ArrayList<String> ingridentsList, ArrayList<String> measuresList) {
+    public IngredientAdapter(Context context, ArrayList<String> ingridentsList, ArrayList<String> measuresList) {
         this.context = context;
         this.ingridentsList = ingridentsList;
         this.measuresList = measuresList;
@@ -38,7 +38,7 @@ public class IngridentAdapter extends RecyclerView.Adapter<IngridentAdapter.Ingr
     @Override
     public void onBindViewHolder(@NonNull IngridentViewHolder holder, int position) {
         String currentIngrident = ingridentsList.get(position);
-        holder.ingridentNameTxt.setText(currentIngrident);
+        holder.ingridientNameTxt.setText(currentIngrident);
 
         String currentMeasure = measuresList.get(position);
         holder.measureNameTxt.setText(currentMeasure);
@@ -46,7 +46,7 @@ public class IngridentAdapter extends RecyclerView.Adapter<IngridentAdapter.Ingr
         String imageUrl = "https://www.themealdb.com/images/ingredients/" + currentIngrident + "-Small.png";
         Glide.with(context)
                 .load(imageUrl)
-                .into(holder.ingredientImageView);
+                .into(holder.ingridientImageView);
     }
 
     @Override
@@ -55,14 +55,14 @@ public class IngridentAdapter extends RecyclerView.Adapter<IngridentAdapter.Ingr
     }
 
     class IngridentViewHolder extends RecyclerView.ViewHolder{
-        ImageView ingredientImageView;
-        TextView ingridentNameTxt;
+        ImageView ingridientImageView;
+        TextView ingridientNameTxt;
         TextView measureNameTxt;
 
         public IngridentViewHolder(@NonNull View itemView) {
             super(itemView);
-            ingredientImageView = itemView.findViewById(R.id.planMealImageView);
-            ingridentNameTxt = itemView.findViewById(R.id.planMealNameTxt);
+            ingridientImageView = itemView.findViewById(R.id.ingridientImageView);
+            ingridientNameTxt = itemView.findViewById(R.id.ingridientNameTxt);
             measureNameTxt = itemView.findViewById(R.id.measureNameTxt);
         }
     }

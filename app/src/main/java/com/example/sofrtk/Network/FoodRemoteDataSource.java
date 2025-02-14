@@ -2,13 +2,11 @@ package com.example.sofrtk.Network;
 
 import com.example.sofrtk.Models.DTOs.CategoryResponse;
 import com.example.sofrtk.Models.DTOs.CountryResponse;
+import com.example.sofrtk.Models.DTOs.IngredientResponse;
 import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -43,5 +41,8 @@ public class FoodRemoteDataSource {
     }
     public Observable<CountryResponse> getCountries(){
         return apiDataService.getCountries("list");
+    }
+    public Observable<IngredientResponse> getIngredients(){
+        return apiDataService.getIngredients("list");
     }
 }

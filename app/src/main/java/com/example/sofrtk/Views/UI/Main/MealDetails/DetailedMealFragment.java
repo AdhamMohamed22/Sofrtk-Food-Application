@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.sofrtk.Views.Adapters.IngridentAdapter;
+import com.example.sofrtk.Views.Adapters.IngredientAdapter;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.R;
 
@@ -77,7 +77,7 @@ public class DetailedMealFragment extends Fragment {
             detailedMealAreaTxt.setText(randomMeal.getStrArea());
             stepsTxtArea.setText(randomMeal.getStrInstructions());
 
-            IngridentAdapter ingridentAdapter = new IngridentAdapter(getContext(),randomMeal.getNonNullIngredients(),randomMeal.getNonNullMeasures());
+            IngredientAdapter ingridentAdapter = new IngredientAdapter(getContext(),randomMeal.getNonNullIngredients(),randomMeal.getNonNullMeasures());
             ingredietsRecyclerView.setAdapter(ingridentAdapter);
 
             loadYouTubeVideo(randomMeal.getStrYoutube());
