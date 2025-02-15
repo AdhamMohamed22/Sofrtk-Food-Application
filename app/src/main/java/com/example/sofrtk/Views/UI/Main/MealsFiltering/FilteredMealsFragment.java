@@ -2,59 +2,45 @@ package com.example.sofrtk.Views.UI.Main.MealsFiltering;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.sofrtk.Models.DTOs.FilterMeal;
+import com.example.sofrtk.Models.DTOs.RandomMeal;
+import com.example.sofrtk.Models.Repository.Repository;
+import com.example.sofrtk.Presenters.MealsFiltering.MealsFilteringImp;
 import com.example.sofrtk.R;
+import com.example.sofrtk.Views.Adapters.FilterMealsAdapter;
+import com.example.sofrtk.Views.Adapters.RandomMealAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FilteredMealsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FilteredMealsFragment extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class FilteredMealsFragment extends Fragment implements MealsFilteringView{
+    MealsFilteringImp mealsFiltering;
+    RecyclerView filteredMealRecyclerView;
+    LinearLayoutManager filterMealLinearLayoutManager;
+    FilterMealsAdapter filterMealsAdapter;
+    ArrayList<FilterMeal> filterMealsList = new ArrayList<>();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public FilteredMealsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FilteredMealsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FilteredMealsFragment newInstance(String param1, String param2) {
-        FilteredMealsFragment fragment = new FilteredMealsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -62,5 +48,60 @@ public class FilteredMealsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_filtered_meals, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mealsFiltering = new MealsFilteringImp(this, Repository.getInstance());
+
+        filteredMealRecyclerView = view.findViewById(R.id.filteredMealRecyclerView);
+        filterMealLinearLayoutManager = new LinearLayoutManager(getActivity());
+        filterMealLinearLayoutManager.setOrientation(filterMealLinearLayoutManager.VERTICAL);
+        filteredMealRecyclerView.setLayoutManager(filterMealLinearLayoutManager);
+        filterMealsAdapter = new FilterMealsAdapter(getActivity(),filterMealsList);
+        filteredMealRecyclerView.setAdapter(filterMealsAdapter);
+
+        String chipType = getArguments().getString("chipType");
+        String filterName = getArguments().getString("filterName");
+
+        if(!chipType.isEmpty() && !filterName.isEmpty()){
+            if(chipType.equals("Category")){mealsFiltering.setMealsInCategory(filterName);}
+            else if(chipType.equals("Country")) {mealsFiltering.setMealsInArea(filterName);}
+            else if(chipType.equals("Ingredient")){mealsFiltering.setMealsInIngredient(filterName);}
+        }
+
+    }
+
+
+    @Override
+    public void showMealsInCategory(ArrayList<FilterMeal> filterMealsList) {
+        filterMealsAdapter.updateData(filterMealsList);
+    }
+
+    @Override
+    public void showMealsInCategoryError(String errorMsg) {
+        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showMealsInArea(ArrayList<FilterMeal> filterMealsList) {
+        filterMealsAdapter.updateData(filterMealsList);
+    }
+
+    @Override
+    public void showMealsInAreaError(String errorMsg) {
+        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showMealsInIngredient(ArrayList<FilterMeal> filterMealsList) {
+        filterMealsAdapter.updateData(filterMealsList);
+    }
+
+    @Override
+    public void showMealsInIngredientError(String errorMsg) {
+        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_LONG).show();
     }
 }

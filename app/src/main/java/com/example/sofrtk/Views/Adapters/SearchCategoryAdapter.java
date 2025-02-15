@@ -46,11 +46,11 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
         Category currentCategory = categoriesList.get(position);
         holder.searchCategoryNameTxt.setText(currentCategory.getCategoryTitle());
         Glide.with(context).load(currentCategory.getCategoryImage()).apply(new RequestOptions().override(225,225)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.searchCategoryImageView);
-        /*
+
         holder.searchCategoryCard.setOnClickListener(v -> {
-            onItemClickListener.onClicks(Integer.parseInt(currentCategory.getCategoryId()));
+            onItemClickListener.onClicks(currentCategory.getCategoryTitle());
         });
-         */
+
     }
 
     @Override
@@ -77,6 +77,6 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
     }
 
     public interface OnItemClickListener{
-        public void onClicks(int id);
+        public void onClicks(String filterName);
     }
 }

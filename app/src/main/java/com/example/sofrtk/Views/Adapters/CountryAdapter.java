@@ -48,11 +48,11 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         Country currentCountry = countriesList.get(position);
         holder.countryNameTxt.setText(currentCountry.getCountryName());
         holder.countryImageView.setImageResource(getFlagResourceByName(holder.countryImageView.getContext(), currentCountry.getCountryName()));
-        /*
+
         holder.countryCard.setOnClickListener(v -> {
-            onItemClickListener.onClicks(Integer.parseInt(currentCountry.getCategoryId()));
+            onItemClickListener.onClicks(currentCountry.getCountryName());
         });
-         */
+
     }
 
     @Override
@@ -80,6 +80,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     }
 
     public interface OnItemClickListener {
-        public void onClicks(int id);
+        void onClicks(String filterName);
     }
 }

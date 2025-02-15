@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,12 +23,14 @@ import android.widget.Toast;
 import com.example.sofrtk.Models.DTOs.Category;
 import com.example.sofrtk.Models.DTOs.Country;
 import com.example.sofrtk.Models.DTOs.Ingredient;
+import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Presenters.Search.SearchPresenterImp;
 import com.example.sofrtk.R;
 import com.example.sofrtk.Views.Adapters.CountryAdapter;
 import com.example.sofrtk.Views.Adapters.MainIngredientAdapter;
 import com.example.sofrtk.Views.Adapters.SearchCategoryAdapter;
+import com.example.sofrtk.Views.UI.Main.Home.HomeFragmentDirections;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -123,6 +126,12 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
     public void showCountries(ArrayList<Country> countriesList) {
         countryAdapter.updateData(countriesList);
         countriesListToFilter = countriesList;
+        countryAdapter.setOnItemClickListener(new CountryAdapter.OnItemClickListener() {
+            @Override
+            public void onClicks(String filterName) {
+                navigateToFilteredMealsFragment(countryChip.getText().toString(),filterName);
+            }
+        });
     }
 
     @Override
@@ -134,6 +143,12 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
     public void showIngredients(ArrayList<Ingredient> ingredientsList) {
         mainIngredientAdapter.updateData(ingredientsList);
         ingredientsListToFilter = ingredientsList;
+        mainIngredientAdapter.setOnItemClickListener(new MainIngredientAdapter.OnItemClickListener() {
+            @Override
+            public void onClicks(String filterName) {
+                navigateToFilteredMealsFragment(ingredientChip.getText().toString(),filterName);
+            }
+        });
     }
 
     @Override
@@ -145,6 +160,12 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
     public void showCategories(ArrayList<Category> categoriesList) {
         categoryAdapter.updateData(categoriesList);
         categoriesListToFilter = categoriesList;
+        categoryAdapter.setOnItemClickListener(new SearchCategoryAdapter.OnItemClickListener() {
+            @Override
+            public void onClicks(String filterName) {
+                navigateToFilteredMealsFragment(categoryChip.getText().toString(),filterName);
+            }
+        });
     }
 
     @Override
@@ -230,6 +251,10 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
                     .collect(Collectors.toList());
         }
         mainIngredientAdapter.updateData(new ArrayList<>(filteredIngredients));
+    }
+
+    public void navigateToFilteredMealsFragment(String chipType,String filterName){
+        Navigation.findNavController(requireView()).navigate(SearchFragmentDirections.actionSearchFragmentToFilteredMealsFragment(chipType,filterName));
     }
 
 }

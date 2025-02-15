@@ -22,6 +22,11 @@ import java.util.ArrayList;
 public class MainIngredientAdapter extends RecyclerView.Adapter<MainIngredientAdapter.MainIngridentViewHolder> {
     Context context;
     ArrayList<Ingredient> ingredientsList;
+    OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public MainIngredientAdapter(Context context, ArrayList<Ingredient> ingridentsList) {
         this.context = context;
@@ -46,6 +51,10 @@ public class MainIngredientAdapter extends RecyclerView.Adapter<MainIngredientAd
         Glide.with(context)
                 .load(imageUrl)
                 .into(holder.mainIngredientImageView);
+
+        holder.mainIngredientCard.setOnClickListener(v -> {
+            onItemClickListener.onClicks(currentIngredient.getIngredientName());
+        });
     }
 
     @Override
@@ -70,6 +79,10 @@ public class MainIngredientAdapter extends RecyclerView.Adapter<MainIngredientAd
             mainIngredientNameTxt = itemView.findViewById(R.id.mainIngredientNameTxt);
             mainIngredientCard = itemView.findViewById(R.id.mainIngredientCard);
         }
+    }
+
+    public interface OnItemClickListener {
+        public void onClicks(String filterName);
     }
 }
 

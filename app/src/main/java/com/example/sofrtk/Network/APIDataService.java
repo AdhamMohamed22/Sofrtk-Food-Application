@@ -2,6 +2,7 @@ package com.example.sofrtk.Network;
 
 import com.example.sofrtk.Models.DTOs.CategoryResponse;
 import com.example.sofrtk.Models.DTOs.CountryResponse;
+import com.example.sofrtk.Models.DTOs.FilterMealResponse;
 import com.example.sofrtk.Models.DTOs.IngredientResponse;
 import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 
@@ -19,4 +20,10 @@ public interface APIDataService {
     Observable<CountryResponse> getCountries(@Query("a") String country);
     @GET("list.php")
     Observable<IngredientResponse> getIngredients(@Query("i") String ingredient);
+    @GET("filter.php")
+    Observable<FilterMealResponse> getFilterMealsByCategory(@Query("c") String category);
+    @GET("filter.php")
+    Observable<FilterMealResponse> getFilterMealsByArea(@Query("a") String area);
+    @GET("filter.php")
+    Observable<FilterMealResponse> getFilterMealsByIngredient(@Query("i") String ingredient);
 }

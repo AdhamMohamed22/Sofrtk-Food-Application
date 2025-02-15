@@ -5,8 +5,10 @@
     android:id="@+id/filteredMealCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/primaryColor">
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/primaryColor"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,8 +16,9 @@
 
         <ImageView
             android:id="@+id/filteredMealImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,20 +28,21 @@
             android:id="@+id/filteredMealNameTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/annapurna_sil"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:text="TextView"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/filteredMealImageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/favouriteCardView"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="10dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="250dp"
@@ -47,16 +51,16 @@
 
             <ImageView
                 android:id="@+id/favourite"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/blank_favourite" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/bookmarkCardView"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             app:cardBackgroundColor="@color/white"
@@ -66,8 +70,8 @@
 
             <ImageView
                 android:id="@+id/bookmark"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/blank_bookmark" />
         </androidx.cardview.widget.CardView>
