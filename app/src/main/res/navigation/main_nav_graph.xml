@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/detailedMealFragment"
-        android:name="com.example.sofrtk.Views.UI.Main.MealDetails.DetailedMealFragment"
+        android:name="com.example.sofrtk.Views.UI.Main.DetailedMeal.DetailedMealFragment"
         android:label="fragment_detailed_meal"
         tools:layout="@layout/fragment_detailed_meal" >
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="string" />
         <argument
             android:name="meal"
             app:argType="com.example.sofrtk.Models.DTOs.RandomMeal"
@@ -31,7 +31,11 @@
         android:id="@+id/searchFragment"
         android:name="com.example.sofrtk.Views.UI.Main.Search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_filteredMealsFragment"
+            app:destination="@id/filteredMealsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
         android:name="com.example.sofrtk.Views.UI.Main.Favourite.FavouriteFragment"
@@ -42,4 +46,19 @@
         android:name="com.example.sofrtk.Views.UI.Main.Plan.PlanFragment"
         android:label="fragment_plan"
         tools:layout="@layout/fragment_plan" />
+    <fragment
+        android:id="@+id/filteredMealsFragment"
+        android:name="com.example.sofrtk.Views.UI.Main.FilteredMeals.FilteredMealsFragment"
+        android:label="fragment_filtered_meals"
+        tools:layout="@layout/fragment_filtered_meals" >
+        <argument
+            android:name="chipType"
+            app:argType="string" />
+        <argument
+            android:name="filterName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_filteredMealsFragment_to_detailedMealFragment"
+            app:destination="@id/detailedMealFragment" />
+    </fragment>
 </navigation>

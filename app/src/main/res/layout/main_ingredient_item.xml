@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ingridientCard"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="15dp"
+    android:id="@+id/mainIngredientCard"
+    android:layout_width="130dp"
+    android:layout_height="130dp"
+    android:layout_margin="3dp"
     app:cardBackgroundColor="@color/primaryColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,10 +12,10 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ingridientImageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:id="@+id/mainIngredientImageView"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="10dp"
             android:adjustViewBounds="false"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,31 +23,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/ingridientNameTxt"
+            android:id="@+id/mainIngredientNameTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
             android:text="Ingredient Name"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingridientImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/mainIngredientImageView" />
 
-        <TextView
-            android:id="@+id/measureNameTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="Measure Name"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingridientNameTxt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

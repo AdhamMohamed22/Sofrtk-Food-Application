@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.sofrtk.Models.DTOs.Category;
-import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.R;
 
 import java.util.ArrayList;
@@ -48,9 +47,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.categoryNameTxt.setText(currentCategory.getCategoryTitle());
         holder.categoryDescriptionTxt.setText(currentCategory.getCategoryDescription());
         Glide.with(context).load(currentCategory.getCategoryImage()).apply(new RequestOptions().override(225,225)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.categoryImageView);
+        /*
         holder.categoryCard.setOnClickListener(v -> {
             onItemClickListener.onClicks(Integer.parseInt(currentCategory.getCategoryId()));
         });
+         */
     }
 
     @Override
@@ -79,6 +80,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public interface OnItemClickListener{
-        public void onClicks(int id);
+        public void onClicks(String id);
     }
 }

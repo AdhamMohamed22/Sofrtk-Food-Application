@@ -17,7 +17,6 @@
     <string name="default_web_client_id">550153787297-30tp2t4tfc8qejbegabi366ppe9ogbrc.apps.googleusercontent.com</string>
     <string name="category">Category</string>
     <string name="country">Country</string>
-    <string name="ingrident">Ingrident</string>
     <string name="meal_name">Meal Name</string>
     <string name="meal_area">Meal Area</string>
     <string name="my_plan">My Plan</string>
@@ -29,4 +28,6 @@
     <string name="saturday">Saturday</string>
     <string name="friday">Friday</string>
     <string name="plan_meal_name">Plan Meal Name</string>
+    <string name="country_name">Country Name</string>
+    <string name="ingredient">ingredient</string>
 </resources>
