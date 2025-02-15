@@ -1,6 +1,6 @@
-package com.example.sofrtk.Presenters.MealsFiltering;
+package com.example.sofrtk.Presenters.FilteredMeals;
 
-public interface MealsFiltering {
+public interface FilteredMealsPresenter {
     void setMealsInCategory(String filterCategory);
     void setMealsInArea(String filterArea);
     void setMealsInIngredient(String filterIngredient);

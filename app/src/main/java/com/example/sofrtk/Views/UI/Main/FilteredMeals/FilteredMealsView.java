@@ -1,10 +1,10 @@
-package com.example.sofrtk.Views.UI.Main.MealsFiltering;
+package com.example.sofrtk.Views.UI.Main.FilteredMeals;
 
 import com.example.sofrtk.Models.DTOs.FilterMeal;
 
 import java.util.ArrayList;
 
-public interface MealsFilteringView {
+public interface FilteredMealsView {
     void showMealsInCategory(ArrayList<FilterMeal> filterMealsList);
     void showMealsInCategoryError(String errorMsg);
     void showMealsInArea(ArrayList<FilterMeal> filterMealsList);

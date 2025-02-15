@@ -48,11 +48,11 @@ public class FilterMealsAdapter extends RecyclerView.Adapter<FilterMealsAdapter.
         FilterMeal currentFilterMeal = filterMealsList.get(position);
         holder.filteredMealNameTxt.setText(currentFilterMeal.getFilterMealName());
         Glide.with(context).load(currentFilterMeal.getFilterMealImage()).apply(new RequestOptions().override(200,200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.filteredMealImageView);
-        /*
-        holder.randomMealCard.setOnClickListener(v -> {
-            onItemClickListener.onClicks(currentRandomMeal);
+
+        holder.filteredMealCard.setOnClickListener(v -> {
+            onItemClickListener.onClicks(filterMealsList.get(holder.getAdapterPosition()));
         });
-         */
+
     }
 
     @Override

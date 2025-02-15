@@ -1,17 +1,17 @@
-package com.example.sofrtk.Presenters.MealsFiltering;
+package com.example.sofrtk.Presenters.FilteredMeals;
 
 import com.example.sofrtk.Models.Repository.Repository;
-import com.example.sofrtk.Views.UI.Main.MealsFiltering.MealsFilteringView;
+import com.example.sofrtk.Views.UI.Main.FilteredMeals.FilteredMealsView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class MealsFilteringImp implements MealsFiltering{
-    MealsFilteringView mealsFilteringView;
+public class FilteredMealsPresenterImp implements FilteredMealsPresenter {
+    FilteredMealsView filteredMealsView;
     Repository repository;
 
-    public MealsFilteringImp(MealsFilteringView mealsFilteringView, Repository repository) {
-        this.mealsFilteringView = mealsFilteringView;
+    public FilteredMealsPresenterImp(FilteredMealsView filteredMealsView, Repository repository) {
+        this.filteredMealsView = filteredMealsView;
         this.repository = repository;
     }
 
@@ -22,8 +22,8 @@ public class MealsFilteringImp implements MealsFiltering{
                 .map(filterMealResponse -> filterMealResponse.filterMealsList)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        filterMeals -> mealsFilteringView.showMealsInCategory(filterMeals),
-                        error -> mealsFilteringView.showMealsInCategoryError(error.getMessage())
+                        filterMeals -> filteredMealsView.showMealsInCategory(filterMeals),
+                        error -> filteredMealsView.showMealsInCategoryError(error.getMessage())
                 );
     }
 
@@ -34,8 +34,8 @@ public class MealsFilteringImp implements MealsFiltering{
                 .map(filterMealResponse -> filterMealResponse.filterMealsList)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        filterMeals -> mealsFilteringView.showMealsInArea(filterMeals),
-                        error -> mealsFilteringView.showMealsInAreaError(error.getMessage())
+                        filterMeals -> filteredMealsView.showMealsInArea(filterMeals),
+                        error -> filteredMealsView.showMealsInAreaError(error.getMessage())
                 );
     }
 
@@ -46,8 +46,8 @@ public class MealsFilteringImp implements MealsFiltering{
                 .map(filterMealResponse -> filterMealResponse.filterMealsList)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        filterMeals -> mealsFilteringView.showMealsInIngredient(filterMeals),
-                        error -> mealsFilteringView.showMealsInIngredientError(error.getMessage())
+                        filterMeals -> filteredMealsView.showMealsInIngredient(filterMeals),
+                        error -> filteredMealsView.showMealsInIngredientError(error.getMessage())
                 );
     }
 }

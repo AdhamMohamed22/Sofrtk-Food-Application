@@ -56,4 +56,7 @@ public class FoodRemoteDataSource {
     public Observable<FilterMealResponse> getFilterMealsByIngredient(String filterIngredient){
         return apiDataService.getFilterMealsByIngredient(filterIngredient);
     }
+    public Observable<RandomMealResponse> getMealDetailsById(String mealId){
+        return apiDataService.getMealDetailsById(mealId);
+    }
 }

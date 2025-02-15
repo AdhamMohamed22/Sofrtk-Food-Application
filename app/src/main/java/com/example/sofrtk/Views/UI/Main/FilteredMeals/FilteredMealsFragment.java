@@ -1,15 +1,14 @@
-package com.example.sofrtk.Views.UI.Main.MealsFiltering;
+package com.example.sofrtk.Views.UI.Main.FilteredMeals;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +17,14 @@ import android.widget.Toast;
 import com.example.sofrtk.Models.DTOs.FilterMeal;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.Repository.Repository;
-import com.example.sofrtk.Presenters.MealsFiltering.MealsFilteringImp;
+import com.example.sofrtk.Presenters.FilteredMeals.FilteredMealsPresenterImp;
 import com.example.sofrtk.R;
 import com.example.sofrtk.Views.Adapters.FilterMealsAdapter;
-import com.example.sofrtk.Views.Adapters.RandomMealAdapter;
 
 import java.util.ArrayList;
 
-public class FilteredMealsFragment extends Fragment implements MealsFilteringView{
-    MealsFilteringImp mealsFiltering;
+public class FilteredMealsFragment extends Fragment implements FilteredMealsView {
+    FilteredMealsPresenterImp mealsFiltering;
     RecyclerView filteredMealRecyclerView;
     LinearLayoutManager filterMealLinearLayoutManager;
     FilterMealsAdapter filterMealsAdapter;
@@ -54,7 +52,7 @@ public class FilteredMealsFragment extends Fragment implements MealsFilteringVie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mealsFiltering = new MealsFilteringImp(this, Repository.getInstance());
+        mealsFiltering = new FilteredMealsPresenterImp(this, Repository.getInstance());
 
         filteredMealRecyclerView = view.findViewById(R.id.filteredMealRecyclerView);
         filterMealLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -62,6 +60,12 @@ public class FilteredMealsFragment extends Fragment implements MealsFilteringVie
         filteredMealRecyclerView.setLayoutManager(filterMealLinearLayoutManager);
         filterMealsAdapter = new FilterMealsAdapter(getActivity(),filterMealsList);
         filteredMealRecyclerView.setAdapter(filterMealsAdapter);
+        filterMealsAdapter.setOnItemClickListener(new FilterMealsAdapter.OnItemClickListener() {
+            @Override
+            public void onClicks(FilterMeal filterMeal) {
+                navigateToDetailedMealFragment(filterMeal.getFilterMealId(),null);
+            }
+        });
 
         String chipType = getArguments().getString("chipType");
         String filterName = getArguments().getString("filterName");
@@ -73,7 +77,6 @@ public class FilteredMealsFragment extends Fragment implements MealsFilteringVie
         }
 
     }
-
 
     @Override
     public void showMealsInCategory(ArrayList<FilterMeal> filterMealsList) {
@@ -103,5 +106,9 @@ public class FilteredMealsFragment extends Fragment implements MealsFilteringVie
     @Override
     public void showMealsInIngredientError(String errorMsg) {
         Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_LONG).show();
+    }
+
+    public void navigateToDetailedMealFragment(String id, RandomMeal randomMeal){
+        Navigation.findNavController(requireView()).navigate(FilteredMealsFragmentDirections.actionFilteredMealsFragmentToDetailedMealFragment(id,randomMeal));
     }
 }

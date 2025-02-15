@@ -26,4 +26,6 @@ public interface APIDataService {
     Observable<FilterMealResponse> getFilterMealsByArea(@Query("a") String area);
     @GET("filter.php")
     Observable<FilterMealResponse> getFilterMealsByIngredient(@Query("i") String ingredient);
+    @GET("lookup.php")
+    Observable<RandomMealResponse> getMealDetailsById(@Query("i") String id);
 }

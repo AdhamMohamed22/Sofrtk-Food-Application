@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment implements HomeView {
         randomMealAdapter.setOnItemClickListener(new RandomMealAdapter.OnItemClickListener() {
             @Override
             public void onClicks(RandomMeal randomMeal) {
-                navigateToDetailedMealFragment(Integer.parseInt(randomMeal.getIdMeal()),randomMeal);
+                navigateToDetailedMealFragment(randomMeal.getIdMeal(),randomMeal);
             }
         });
 
@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment implements HomeView {
         categoryRecyclerView.setInfinite(false);
         categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
             @Override
-            public void onClicks(int id) {
+            public void onClicks(String id) {
                 navigateToDetailedMealFragment(id,null);
             }
         });
@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment implements HomeView {
         Toast.makeText(getActivity(),errorMsg.toString(),Toast.LENGTH_LONG);
     }
 
-    public void navigateToDetailedMealFragment(int id, RandomMeal randomMeal){
+    public void navigateToDetailedMealFragment(String id, RandomMeal randomMeal){
         Navigation.findNavController(requireView()).navigate(HomeFragmentDirections.actionHomeFragmentToDetailedMealFragment(id,randomMeal));
     }
 }

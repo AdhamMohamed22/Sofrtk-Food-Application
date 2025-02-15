@@ -47,4 +47,7 @@ public class Repository {
     public Observable<FilterMealResponse> getFilterMealsByIngredient(String filterIngredient){
         return foodRemoteDataSource.getFilterMealsByIngredient(filterIngredient);
     }
+    public Observable<RandomMealResponse> getMealDetailsById(String mealId){
+        return foodRemoteDataSource.getMealDetailsById(mealId);
+    }
 }

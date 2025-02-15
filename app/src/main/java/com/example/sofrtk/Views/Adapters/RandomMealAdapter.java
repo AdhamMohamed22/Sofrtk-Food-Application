@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.sofrtk.Models.DTOs.Category;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 import com.example.sofrtk.R;
@@ -62,9 +63,9 @@ public class RandomMealAdapter extends RecyclerView.Adapter<RandomMealAdapter.Ra
         return randomMealsList.size();
     }
 
-    public void updateData(ArrayList<RandomMeal> newRandomMeals) {
+    public void updateData(ArrayList<RandomMeal> newMealList) {
         this.randomMealsList.clear();
-        this.randomMealsList.addAll((Collection<? extends RandomMeal>) newRandomMeals);
+        this.randomMealsList.addAll(newMealList);
         notifyDataSetChanged();
     }
 
