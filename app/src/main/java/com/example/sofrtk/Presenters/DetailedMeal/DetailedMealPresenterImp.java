@@ -1,5 +1,8 @@
 package com.example.sofrtk.Presenters.DetailedMeal;
 
+import com.example.sofrtk.DB.Model.FavouriteMeal;
+import com.example.sofrtk.DB.Model.PlanMeal;
+import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Views.UI.Main.DetailedMeal.DetailedMealView;
 
@@ -22,8 +25,32 @@ public class DetailedMealPresenterImp implements DetailedMealPresenter {
                 .map(mealDetails -> mealDetails.randomMealsList)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        mealDetails -> detailedMealView.showMealDetails(mealDetails),
+                        mealDetails -> detailedMealView.showMealDetails(mealDetails.get(0)),
                         error -> detailedMealView.showMealDetailsError(error.getMessage())
+                );
+    }
+
+    @Override
+    public void addToFavourite(RandomMeal meal) {
+        FavouriteMeal favouriteMeal = new FavouriteMeal("Adham",meal.getIdMeal(),meal);
+        repository.insertFavouriteMeal(favouriteMeal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> detailedMealView.onInsertFavouriteSuccess(),
+                        error -> detailedMealView.onInsertFavouriteFail(error.getMessage())
+                );
+    }
+
+    @Override
+    public void addToPlan(RandomMeal meal,String selectedDate) {
+        PlanMeal planMeal = new PlanMeal("Adham",meal.getIdMeal(),meal,selectedDate);
+        repository.insertPlanMeal(planMeal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> detailedMealView.onInsertPlanSuccess(),
+                        error -> detailedMealView.onInsertPlanFail(error.getMessage())
                 );
     }
 }

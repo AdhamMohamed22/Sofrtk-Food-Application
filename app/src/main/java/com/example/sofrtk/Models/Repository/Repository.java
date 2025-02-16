@@ -1,5 +1,10 @@
 package com.example.sofrtk.Models.Repository;
 
+import android.content.Context;
+
+import com.example.sofrtk.DB.FoodLocalDataSource;
+import com.example.sofrtk.DB.Model.FavouriteMeal;
+import com.example.sofrtk.DB.Model.PlanMeal;
 import com.example.sofrtk.Models.DTOs.CategoryResponse;
 import com.example.sofrtk.Models.DTOs.CountryResponse;
 import com.example.sofrtk.Models.DTOs.FilterMealResponse;
@@ -7,19 +12,25 @@ import com.example.sofrtk.Models.DTOs.IngredientResponse;
 import com.example.sofrtk.Models.DTOs.RandomMealResponse;
 import com.example.sofrtk.Network.FoodRemoteDataSource;
 
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public class Repository {
+
     public static Repository repository = null;
     FoodRemoteDataSource foodRemoteDataSource;
+    FoodLocalDataSource foodLocalDataSource;
 
-    private Repository(){
+    private Repository(Context context){
         foodRemoteDataSource = FoodRemoteDataSource.getInstance();
+        foodLocalDataSource = FoodLocalDataSource.getInstance(context);
     }
-    public static Repository getInstance(){
+    public static Repository getInstance(Context context){
         if(repository == null){
-            repository = new Repository();
+            repository = new Repository(context);
         }
         return repository;
     }
@@ -50,4 +61,14 @@ public class Repository {
     public Observable<RandomMealResponse> getMealDetailsById(String mealId){
         return foodRemoteDataSource.getMealDetailsById(mealId);
     }
+
+
+    public Observable<List<FavouriteMeal>> getFavouriteMeals(String userId){ return foodLocalDataSource.getFavouriteMeals(userId);}
+    public Completable insertFavouriteMeal(FavouriteMeal favouriteMeal){ return foodLocalDataSource.insertFavouriteMeal(favouriteMeal);}
+    public Completable deleteFavouriteMeal(FavouriteMeal favouriteMeal){ return foodLocalDataSource.deleteFavouriteMeal(favouriteMeal);}
+
+    public Observable<List<PlanMeal>> getPlanMeals(String userId,String mealDate){ return foodLocalDataSource.getPlanMeals(userId,mealDate);}
+    public Completable insertPlanMeal(PlanMeal planMeal){ return foodLocalDataSource.insertPlanMeal(planMeal);}
+    public Completable deletePlanMeal(PlanMeal planMeal){ return foodLocalDataSource.deletePlanMeal(planMeal);}
+
 }

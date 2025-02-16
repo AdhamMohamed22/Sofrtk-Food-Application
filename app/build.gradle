@@ -66,4 +66,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     //RX Room
     implementation "androidx.room:room-rxjava3:2.4.1"
+    // Room
+    implementation "androidx.room:room-runtime:2.6.1"
+    annotationProcessor "androidx.room:room-compiler:2.6.1"
 }

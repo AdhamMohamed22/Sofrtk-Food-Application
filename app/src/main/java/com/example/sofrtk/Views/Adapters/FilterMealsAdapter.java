@@ -52,7 +52,6 @@ public class FilterMealsAdapter extends RecyclerView.Adapter<FilterMealsAdapter.
         holder.filteredMealCard.setOnClickListener(v -> {
             onItemClickListener.onClicks(filterMealsList.get(holder.getAdapterPosition()));
         });
-
     }
 
     @Override
