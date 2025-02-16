@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +41,8 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
     WebView videoWebView;
     RandomMeal randomMeal;
     String id;
+    CardView favouriteCardView;
+    ImageView favourite;
 
     public DetailedMealFragment() {
         // Required empty public constructor
@@ -61,7 +64,10 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mealDetailsPresenter = new DetailedMealPresenterImp(this, Repository.getInstance());
+        mealDetailsPresenter = new DetailedMealPresenterImp(this, Repository.getInstance(getActivity()));
+
+        favouriteCardView = view.findViewById(R.id.favouriteCardView);
+        favourite = view.findViewById(R.id.favourite);
 
         detailedMealImage = view.findViewById(R.id.detailedMealImage);
         detailedMealNameTxt = view.findViewById(R.id.detailedMealNameTxt);
@@ -78,16 +84,11 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
         }
 
         if (randomMeal != null) {
-            Glide.with(requireView()).load(randomMeal.getStrMealThumb()).apply(new RequestOptions().override(400, 400)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(detailedMealImage);
-            detailedMealNameTxt.setText(randomMeal.getStrMeal());
-            detailedMealAreaTxt.setText(randomMeal.getStrArea());
-            stepsTxtArea.setText(randomMeal.getStrInstructions());
-            IngredientAdapter ingridentAdapter = new IngredientAdapter(getContext(),randomMeal.getNonNullIngredients(),randomMeal.getNonNullMeasures());
-            ingredietsRecyclerView.setAdapter(ingridentAdapter);
-            loadYouTubeVideo(randomMeal.getStrYoutube());
+            showMealDetails(randomMeal);
         } else {
             mealDetailsPresenter.setMealDetails(id);
         }
+
     }
 
     private void loadYouTubeVideo(String youtubeUrl) {
@@ -110,18 +111,33 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
     }
 
     @Override
-    public void showMealDetails(ArrayList<RandomMeal> mealList) {
-        Glide.with(requireView()).load(mealList.get(0).getStrMealThumb()).apply(new RequestOptions().override(400, 400)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(detailedMealImage);
-        detailedMealNameTxt.setText(mealList.get(0).getStrMeal());
-        detailedMealAreaTxt.setText(mealList.get(0).getStrArea());
-        stepsTxtArea.setText(mealList.get(0).getStrInstructions());
-        IngredientAdapter ingridentAdapter = new IngredientAdapter(getContext(),mealList.get(0).getNonNullIngredients(),mealList.get(0).getNonNullMeasures());
+    public void showMealDetails(RandomMeal meal) {
+        Glide.with(requireView()).load(meal.getStrMealThumb()).apply(new RequestOptions().override(400, 400)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(detailedMealImage);
+        detailedMealNameTxt.setText(meal.getStrMeal());
+        detailedMealAreaTxt.setText(meal.getStrArea());
+        stepsTxtArea.setText(meal.getStrInstructions());
+        IngredientAdapter ingridentAdapter = new IngredientAdapter(getContext(),meal.getNonNullIngredients(),meal.getNonNullMeasures());
         ingredietsRecyclerView.setAdapter(ingridentAdapter);
-        loadYouTubeVideo(mealList.get(0).getStrYoutube());
+        loadYouTubeVideo(meal.getStrYoutube());
+
+        favouriteCardView.setOnClickListener(v -> {
+            mealDetailsPresenter.addToFavourite(meal);
+        });
     }
 
     @Override
     public void showMealDetailsError(String errorMsg) {
         Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onInsertSuccess() {
+        Toast.makeText(getActivity(), "Meal Added Successfully!", Toast.LENGTH_LONG).show();
+        favourite.setImageResource(R.drawable.favourite_icon);
+    }
+
+    @Override
+    public void onInsertFail(String errorMsg) {
+        Toast.makeText(getActivity(), "Failed Adding Meal!!", Toast.LENGTH_LONG).show();
     }
 }

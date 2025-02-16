@@ -52,7 +52,7 @@ public class FilteredMealsFragment extends Fragment implements FilteredMealsView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mealsFiltering = new FilteredMealsPresenterImp(this, Repository.getInstance());
+        mealsFiltering = new FilteredMealsPresenterImp(this, Repository.getInstance(getActivity()));
 
         filteredMealRecyclerView = view.findViewById(R.id.filteredMealRecyclerView);
         filterMealLinearLayoutManager = new LinearLayoutManager(getActivity());

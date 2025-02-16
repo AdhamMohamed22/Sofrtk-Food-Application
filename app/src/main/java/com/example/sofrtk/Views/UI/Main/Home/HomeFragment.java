@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment implements HomeView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        homePresenter = new HomePresenterImp(this, Repository.getInstance());
+        homePresenter = new HomePresenterImp(this, Repository.getInstance(getActivity()));
         homePresenter.setRandomMeal();
         homePresenter.setCategories();
 

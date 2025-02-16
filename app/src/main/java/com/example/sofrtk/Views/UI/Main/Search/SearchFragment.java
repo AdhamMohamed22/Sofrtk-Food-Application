@@ -90,7 +90,7 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
         countryChip = view.findViewById(R.id.countryChip);
         ingredientChip = view.findViewById(R.id.ingredientChip);
 
-        searchPresenter = new SearchPresenterImp(this, Repository.getInstance());
+        searchPresenter = new SearchPresenterImp(this, Repository.getInstance(getActivity()));
 
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         searchGridLayoutManager = new GridLayoutManager(getActivity(),3);
