@@ -95,6 +95,7 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
     @Override
     public void deleteFavouriteMeals(FavouriteMeal favouriteMeal) {
         favouriteMealsAdapter.removeItem(favouriteMeal);
+        Toast.makeText(getActivity(),"Meal Removed Successfully!",Toast.LENGTH_LONG).show();
     }
 
     @Override

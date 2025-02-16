@@ -6,11 +6,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcel;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +31,15 @@ import com.example.sofrtk.Presenters.DetailedMeal.DetailedMealPresenterImp;
 import com.example.sofrtk.Views.Adapters.IngredientAdapter;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.R;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class DetailedMealFragment extends Fragment implements DetailedMealView{
     DetailedMealPresenterImp mealDetailsPresenter;
@@ -43,6 +53,8 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
     String id;
     CardView favouriteCardView;
     ImageView favourite;
+    CardView bookmarkCardView;
+    ImageView bookmark;
 
     public DetailedMealFragment() {
         // Required empty public constructor
@@ -68,6 +80,8 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
 
         favouriteCardView = view.findViewById(R.id.favouriteCardView);
         favourite = view.findViewById(R.id.favourite);
+        bookmarkCardView = view.findViewById(R.id.bookmarkCardView);
+        bookmark = view.findViewById(R.id.bookmark);
 
         detailedMealImage = view.findViewById(R.id.detailedMealImage);
         detailedMealNameTxt = view.findViewById(R.id.detailedMealNameTxt);
@@ -123,6 +137,11 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
         favouriteCardView.setOnClickListener(v -> {
             mealDetailsPresenter.addToFavourite(meal);
         });
+
+        bookmarkCardView.setOnClickListener(v -> {
+            handleDatePicker(v,meal);
+
+        });
     }
 
     @Override
@@ -131,13 +150,63 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
     }
 
     @Override
-    public void onInsertSuccess() {
-        Toast.makeText(getActivity(), "Meal Added Successfully!", Toast.LENGTH_LONG).show();
+    public void onInsertFavouriteSuccess() {
+        Toast.makeText(getActivity(), "Meal Added To Favourites Successfully!", Toast.LENGTH_LONG).show();
         favourite.setImageResource(R.drawable.favourite_icon);
     }
 
     @Override
-    public void onInsertFail(String errorMsg) {
-        Toast.makeText(getActivity(), "Failed Adding Meal!!", Toast.LENGTH_LONG).show();
+    public void onInsertFavouriteFail(String errorMsg) {
+        Toast.makeText(getActivity(), "Failed Adding Meal To Favourites!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onInsertPlanSuccess() {
+        Toast.makeText(getActivity(), "Meal Added To Plan Successfully!", Toast.LENGTH_LONG).show();
+        bookmark.setImageResource(R.drawable.bookmark);
+    }
+
+    @Override
+    public void onInsertPlanFail(String errorMsg) {
+        Toast.makeText(getActivity(), "Failed Adding Meal To Plan!", Toast.LENGTH_LONG).show();
+        Log.e("TAG", "onInsertPlanFail: " + errorMsg);
+    }
+
+    public void handleDatePicker(View v,RandomMeal meal){
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        long today = calendar.getTimeInMillis();
+
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        long maxDate = calendar.getTimeInMillis();
+
+        CalendarConstraints.DateValidator validator = new CalendarConstraints.DateValidator() {
+            @Override
+            public int describeContents() {return 0;}
+            @Override
+            public void writeToParcel(@NonNull Parcel dest, int flags) {}
+            @Override
+            public boolean isValid(long date) {return date >= today && date <= maxDate;}
+        };
+
+        CalendarConstraints constraints = new CalendarConstraints.Builder()
+                .setStart(today)
+                .setEnd(maxDate)
+                .setValidator(validator)
+                .build();
+
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select a Date")
+                .setSelection(today)
+                .setCalendarConstraints(constraints)
+                .build();
+
+        datePicker.show(((AppCompatActivity) v.getContext()).getSupportFragmentManager(), "DATE_PICKER");
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM dd", Locale.getDefault());
+            String selectedDate = sdf.format(selection);
+            mealDetailsPresenter.addToPlan(meal,selectedDate);
+            Log.i("TAG", "handleDatePicker: " + selectedDate);
+        });
     }
 }

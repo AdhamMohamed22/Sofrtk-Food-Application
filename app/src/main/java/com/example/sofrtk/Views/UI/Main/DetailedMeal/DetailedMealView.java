@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public interface DetailedMealView {
     void showMealDetails(RandomMeal meal);
     void showMealDetailsError(String errorMsg);
-    void onInsertSuccess();
-    void onInsertFail(String errorMsg);
+    void onInsertFavouriteSuccess();
+    void onInsertFavouriteFail(String errorMsg);
+    void onInsertPlanSuccess();
+    void onInsertPlanFail(String errorMsg);
 }

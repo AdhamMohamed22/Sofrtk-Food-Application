@@ -9,9 +9,10 @@ import androidx.room.TypeConverters;
 
 import com.example.sofrtk.DB.Dao.MealDAO;
 import com.example.sofrtk.DB.Model.FavouriteMeal;
+import com.example.sofrtk.DB.Model.PlanMeal;
 
 
-@Database(entities = {FavouriteMeal.class},version = 1)
+@Database(entities = {FavouriteMeal.class, PlanMeal.class},version = 3)
 @TypeConverters(Converters.class)
 public abstract class AppDB extends RoomDatabase {
     private static AppDB instance = null;

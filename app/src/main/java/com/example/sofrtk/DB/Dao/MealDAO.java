@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.sofrtk.DB.Model.FavouriteMeal;
+import com.example.sofrtk.DB.Model.PlanMeal;
 
 import java.util.List;
 
@@ -21,4 +22,11 @@ public interface MealDAO {
     Completable insertFavouriteMeal(FavouriteMeal favouriteMeal);
     @Delete
     Completable deleteFavouriteMeal(FavouriteMeal favouriteMeal);
+
+    @Query("SELECT * From plan_meals_table WHERE userId = :userId AND mealDate = :mealDate")
+    Observable<List<PlanMeal>> getPlanMeals(String userId,String mealDate);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable insertPlanMeal(PlanMeal planMeal);
+    @Delete
+    Completable deletePlanMeal(PlanMeal planMeal);
 }

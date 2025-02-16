@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.sofrtk.DB.FoodLocalDataSource;
 import com.example.sofrtk.DB.Model.FavouriteMeal;
+import com.example.sofrtk.DB.Model.PlanMeal;
 import com.example.sofrtk.Models.DTOs.CategoryResponse;
 import com.example.sofrtk.Models.DTOs.CountryResponse;
 import com.example.sofrtk.Models.DTOs.FilterMealResponse;
@@ -65,4 +66,9 @@ public class Repository {
     public Observable<List<FavouriteMeal>> getFavouriteMeals(String userId){ return foodLocalDataSource.getFavouriteMeals(userId);}
     public Completable insertFavouriteMeal(FavouriteMeal favouriteMeal){ return foodLocalDataSource.insertFavouriteMeal(favouriteMeal);}
     public Completable deleteFavouriteMeal(FavouriteMeal favouriteMeal){ return foodLocalDataSource.deleteFavouriteMeal(favouriteMeal);}
+
+    public Observable<List<PlanMeal>> getPlanMeals(String userId,String mealDate){ return foodLocalDataSource.getPlanMeals(userId,mealDate);}
+    public Completable insertPlanMeal(PlanMeal planMeal){ return foodLocalDataSource.insertPlanMeal(planMeal);}
+    public Completable deletePlanMeal(PlanMeal planMeal){ return foodLocalDataSource.deletePlanMeal(planMeal);}
+
 }
