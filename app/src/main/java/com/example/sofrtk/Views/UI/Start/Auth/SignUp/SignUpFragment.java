@@ -47,6 +47,7 @@ public class SignUpFragment extends Fragment {
     EditText confirmPasswordTextField;
     Button btnRegister;
     CardView googleCardView;
+    CardView guestCardView;
 
     boolean isValid = true;
     private FirebaseAuth auth;
@@ -130,6 +131,13 @@ public class SignUpFragment extends Fragment {
             }
         });
 
+        guestCardView = view.findViewById(R.id.guestCardView);
+        guestCardView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            getActivity().finish();
+        });
 
     }
     public void validateEmptyEditText(EditText field){
@@ -231,10 +239,12 @@ public class SignUpFragment extends Fragment {
                     }
                 });
     }
+
     private void saveUserToPreferences(String userId, String email) {
         rxSharedPreferences.getString("userId").set(userId);
         rxSharedPreferences.getString("email").set(email);
         rxSharedPreferences.getBoolean("isLoggedIn").set(true);
     }
+
 
 }

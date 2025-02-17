@@ -1,5 +1,6 @@
 package com.example.sofrtk.Views.UI.Main.Home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sofrtk.Models.Repository.Repository;
@@ -21,6 +23,7 @@ import com.example.sofrtk.Views.Adapters.RandomMealAdapter;
 import com.example.sofrtk.Models.DTOs.Category;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.R;
+import com.f2prateek.rx.preferences2.RxSharedPreferences;
 import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.util.ArrayList;
@@ -34,6 +37,8 @@ public class HomeFragment extends Fragment implements HomeView {
     CarouselRecyclerview categoryRecyclerView;
     CategoryAdapter categoryAdapter;
     ArrayList<Category> categoriesList = new ArrayList<>();
+    TextView userName;
+    RxSharedPreferences rxSharedPreferences;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -54,6 +59,17 @@ public class HomeFragment extends Fragment implements HomeView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", getActivity().MODE_PRIVATE);
+        rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
+
+        userName = view.findViewById(R.id.userName);
+
+        if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
+            userName.setText("Welcome! " + rxSharedPreferences.getString("email").get());
+        } else {
+            userName.setText("Welcome! Guest");
+        }
 
         homePresenter = new HomePresenterImp(this, Repository.getInstance(getActivity()));
         homePresenter.setRandomMeal();

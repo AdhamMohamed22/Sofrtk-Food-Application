@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,25 +92,33 @@ public class SplashFragment extends Fragment {
     }
 
     private void checkUserSession() {
-        rxSharedPreferences.getBoolean("isLoggedIn", false)
-                .asObservable()
-                .subscribe(isLoggedIn -> {
-                    if (isLoggedIn) {
-                        rxSharedPreferences.getString("email").asObservable()
-                                .subscribe(email -> {
-                                    Toast.makeText(getActivity(), "Welcome back: " + email, Toast.LENGTH_SHORT).show();
+            rxSharedPreferences.getBoolean("isLoggedIn", false)
+                    .asObservable()
+                    .subscribe(
+                            isLoggedIn -> {
+                                if (isLoggedIn) {
+                                    rxSharedPreferences.getString("email").asObservable()
+                                            .subscribe(email -> {
+                                                // Check if the fragment is still attached before showing the toast
+                                                if (isAdded() && getActivity() != null) {
+                                                    Toast.makeText(getActivity(), "Welcome back: " + email, Toast.LENGTH_SHORT).show();
+                                                }
+                                                // Navigate to MainActivity if logged in
+                                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+                                                startActivity(intent);
+                                                getActivity().finish();
+                                            }, throwable -> {
+                                                // Handle error while fetching email
+                                                Log.e("SplashFragment", "Error getting email", throwable);
+                                            });
+                                }
+                            },
+                            throwable -> {
+                                // Handle error while checking login status
+                                Log.e("SplashFragment", "Error checking login status", throwable);
+                            }
+                    );
+        }
 
-                                    // Navigate to MainActivity
-                                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
-
-                                    // If you need to pass data to MainActivity, use:
-                                    // intent.putExtra("userEmail", userEmail);
-
-                                    startActivity(intent);
-                                    getActivity().finish();
-                                });
-                    }
-                });
-    }
 }

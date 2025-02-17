@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.sofrtk.R;
 import com.example.sofrtk.Views.UI.Start.Auth.SignUp.SignUpFragment;
@@ -59,14 +60,27 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.searchFragment);
             return true;
         } else if (id == R.id.favouriteFragment) {
-            navController.navigate(R.id.favouriteFragment);
-            return true;
+            if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
+                navController.navigate(R.id.favouriteFragment);
+                return true;
+            } else {
+                return false;
+            }
+
         } else if (id == R.id.planFragment) {
-            navController.navigate(R.id.planFragment);
-            return true;
+            if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
+                navController.navigate(R.id.planFragment);
+                return true;
+            } else {
+                return false;
+            }
         } else if (id == R.id.logoutFragment) {
-            showLogoutDialog();
-            return false;
+            if(rxSharedPreferences.getBoolean("isLoggedIn",false).get()) {
+                showLogoutDialog();
+                return false;
+            } else {
+                return false;
+            }
         }
         return false;
     }
