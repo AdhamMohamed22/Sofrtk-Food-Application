@@ -1,5 +1,6 @@
 package com.example.sofrtk.Views.UI.Main.DetailedMeal;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
@@ -183,6 +184,11 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
     public void onInsertPlanFail(String errorMsg) {
         Toast.makeText(getActivity(), "Failed Adding Meal To Plan!", Toast.LENGTH_LONG).show();
         Log.e("TAG", "onInsertPlanFail: " + errorMsg);
+    }
+
+    @Override
+    public Activity getViewActivity() {
+        return requireActivity();
     }
 
     public void handleDatePicker(View v,RandomMeal meal){

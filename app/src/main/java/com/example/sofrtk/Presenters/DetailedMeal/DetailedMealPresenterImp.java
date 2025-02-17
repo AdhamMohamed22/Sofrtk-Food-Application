@@ -1,10 +1,13 @@
 package com.example.sofrtk.Presenters.DetailedMeal;
 
+import android.content.SharedPreferences;
+
 import com.example.sofrtk.DB.Model.FavouriteMeal;
 import com.example.sofrtk.DB.Model.PlanMeal;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Views.UI.Main.DetailedMeal.DetailedMealView;
+import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -12,10 +15,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class DetailedMealPresenterImp implements DetailedMealPresenter {
     DetailedMealView detailedMealView;
     Repository repository;
+    RxSharedPreferences rxSharedPreferences;
 
     public DetailedMealPresenterImp(DetailedMealView detailedMealView, Repository repository) {
         this.detailedMealView = detailedMealView;
         this.repository = repository;
+        SharedPreferences sharedPreferences = detailedMealView.getViewActivity().getSharedPreferences("UserPrefs", detailedMealView.getViewActivity().MODE_PRIVATE);
+        rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
     }
 
     @Override
@@ -32,7 +38,7 @@ public class DetailedMealPresenterImp implements DetailedMealPresenter {
 
     @Override
     public void addToFavourite(RandomMeal meal) {
-        FavouriteMeal favouriteMeal = new FavouriteMeal("Adham",meal.getIdMeal(),meal);
+        FavouriteMeal favouriteMeal = new FavouriteMeal(rxSharedPreferences.getString("userId").get(),meal.getIdMeal(),meal);
         repository.insertFavouriteMeal(favouriteMeal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -44,7 +50,7 @@ public class DetailedMealPresenterImp implements DetailedMealPresenter {
 
     @Override
     public void addToPlan(RandomMeal meal,String selectedDate) {
-        PlanMeal planMeal = new PlanMeal("Adham",meal.getIdMeal(),meal,selectedDate);
+        PlanMeal planMeal = new PlanMeal(rxSharedPreferences.getString("userId").get(),meal.getIdMeal(),meal,selectedDate);
         repository.insertPlanMeal(planMeal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
