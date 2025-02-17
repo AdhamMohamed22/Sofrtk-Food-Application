@@ -83,7 +83,6 @@ public class PlanFragment extends Fragment implements PlanView{
                 @Override
                 public void onClicks(String selectedDate) {
                     planPresenter.getPlanMeals("Adham", selectedDate);
-                    Log.i("TAG", "onClicks: " + selectedDate);
                 }
             });
         });

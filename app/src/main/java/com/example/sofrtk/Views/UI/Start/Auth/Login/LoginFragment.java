@@ -1,6 +1,7 @@
 package com.example.sofrtk.Views.UI.Start.Auth.Login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -20,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sofrtk.R;
+import com.example.sofrtk.Views.UI.Main.MainActivity;
+import com.f2prateek.rx.preferences2.Preference;
+import com.f2prateek.rx.preferences2.RxSharedPreferences;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -44,7 +49,7 @@ public class LoginFragment extends Fragment {
     boolean isValid = true;
     private FirebaseAuth auth;
     private GoogleSignInClient googleSignInClient;
-
+    private RxSharedPreferences rxSharedPreferences;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -66,6 +71,9 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", getActivity().MODE_PRIVATE);
+        rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
 
         auth = FirebaseAuth.getInstance();
 
@@ -126,6 +134,18 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getActivity(), "log-in successful!", Toast.LENGTH_SHORT).show();
+                        String userId = authResult.getUser().getUid();
+                        saveUserToPreferences(userId, email);
+
+                        // Navigate to MainActivity
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+
+                        // If you need to pass data to MainActivity, use:
+                        // intent.putExtra("userEmail", userEmail);
+
+                        startActivity(intent);
+                        getActivity().finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -162,7 +182,19 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getActivity(), "log-in With Google successful!", Toast.LENGTH_SHORT).show();
-                        //Log.i("TAG", "onSuccess: " + authResult.getUser().getDisplayName());
+                        String userId = authResult.getUser().getUid();
+                        String email = authResult.getUser().getEmail();
+                        saveUserToPreferences(userId, email);
+
+                        // Navigate to MainActivity
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+
+                        // If you need to pass data to MainActivity, use:
+                        // intent.putExtra("userEmail", userEmail);
+
+                        startActivity(intent);
+                        getActivity().finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -171,19 +203,31 @@ public class LoginFragment extends Fragment {
                     }
                 });
     }
+    private void saveUserToPreferences(String userId, String email) {
+        rxSharedPreferences.getString("userId").set(userId);
+        rxSharedPreferences.getString("email").set(email);
+        rxSharedPreferences.getBoolean("isLoggedIn").set(true);
+    }
 
-    private void logoutWithGoogle(){
+    private void logoutWithGoogle() {
         auth.signOut();
         googleSignInClient.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
+                RxSharedPreferences rxSharedPreferences = RxSharedPreferences.create(
+                        PreferenceManager.getDefaultSharedPreferences(requireContext())
+                );
 
+                Preference<Boolean> isLoggedIn = rxSharedPreferences.getBoolean("isLoggedIn", false);
+                Preference<String> emailPref = rxSharedPreferences.getString("email", "");
+
+                isLoggedIn.set(false);
+                emailPref.delete();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
+            public void onFailure(@NonNull Exception e) {}
         });
     }
+
 }

@@ -2,6 +2,8 @@ package com.example.sofrtk.Views.UI.Start.Splash;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,13 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.sofrtk.R;
+import com.example.sofrtk.Views.UI.Main.MainActivity;
+import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 public class SplashFragment extends Fragment {
     ImageView logo;
     LottieAnimationView lottieAnimationView;
+    private RxSharedPreferences rxSharedPreferences;
 
     public SplashFragment() {
         // Required empty public constructor
@@ -42,6 +48,9 @@ public class SplashFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", getActivity().MODE_PRIVATE);
+        rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
 
         logo = view.findViewById(R.id.sofrtkLogo);
         lottieAnimationView = view.findViewById(R.id.lottie);
@@ -74,9 +83,33 @@ public class SplashFragment extends Fragment {
         lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                checkUserSession();
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.action_splashFragment_to_signUpFragment);
             }
         });
+    }
+
+    private void checkUserSession() {
+        rxSharedPreferences.getBoolean("isLoggedIn", false)
+                .asObservable()
+                .subscribe(isLoggedIn -> {
+                    if (isLoggedIn) {
+                        rxSharedPreferences.getString("email").asObservable()
+                                .subscribe(email -> {
+                                    Toast.makeText(getActivity(), "Welcome back: " + email, Toast.LENGTH_SHORT).show();
+
+                                    // Navigate to MainActivity
+                                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+
+                                    // If you need to pass data to MainActivity, use:
+                                    // intent.putExtra("userEmail", userEmail);
+
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                });
+                    }
+                });
     }
 }
