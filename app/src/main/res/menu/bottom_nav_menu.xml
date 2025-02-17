@@ -27,7 +27,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/nav_logout"
+        android:id="@+id/logoutFragment"
         android:icon="@drawable/logout_icon"
         android:title="Logout"
         app:showAsAction="ifRoom"/>

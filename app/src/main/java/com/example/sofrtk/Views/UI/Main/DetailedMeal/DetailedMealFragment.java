@@ -1,5 +1,7 @@
 package com.example.sofrtk.Views.UI.Main.DetailedMeal;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ import com.example.sofrtk.Presenters.DetailedMeal.DetailedMealPresenterImp;
 import com.example.sofrtk.Views.Adapters.IngredientAdapter;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.R;
+import com.f2prateek.rx.preferences2.RxSharedPreferences;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -55,6 +58,7 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
     ImageView favourite;
     CardView bookmarkCardView;
     ImageView bookmark;
+    RxSharedPreferences rxSharedPreferences;
 
     public DetailedMealFragment() {
         // Required empty public constructor
@@ -75,6 +79,9 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", getActivity().MODE_PRIVATE);
+        rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
 
         mealDetailsPresenter = new DetailedMealPresenterImp(this, Repository.getInstance(getActivity()));
 
@@ -135,12 +142,19 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
         loadYouTubeVideo(meal.getStrYoutube());
 
         favouriteCardView.setOnClickListener(v -> {
-            mealDetailsPresenter.addToFavourite(meal);
+            if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
+                mealDetailsPresenter.addToFavourite(meal);
+            } else {
+                Toast.makeText(getActivity(),"Not Available Action For Guest, You must Register Or Login",Toast.LENGTH_LONG).show();
+            }
         });
 
         bookmarkCardView.setOnClickListener(v -> {
-            handleDatePicker(v,meal);
-
+            if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
+                handleDatePicker(v,meal);
+            } else {
+                Toast.makeText(getActivity(),"Not Available Action For Guest, You must Register Or Login",Toast.LENGTH_LONG).show();
+            }
         });
     }
 
@@ -172,8 +186,17 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
         Log.e("TAG", "onInsertPlanFail: " + errorMsg);
     }
 
+    @Override
+    public Activity getViewActivity() {
+        return requireActivity();
+    }
+
     public void handleDatePicker(View v,RandomMeal meal){
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         long today = calendar.getTimeInMillis();
 
         calendar.add(Calendar.DAY_OF_MONTH, 7);
@@ -206,7 +229,6 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
             SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM dd", Locale.getDefault());
             String selectedDate = sdf.format(selection);
             mealDetailsPresenter.addToPlan(meal,selectedDate);
-            Log.i("TAG", "handleDatePicker: " + selectedDate);
         });
     }
 }

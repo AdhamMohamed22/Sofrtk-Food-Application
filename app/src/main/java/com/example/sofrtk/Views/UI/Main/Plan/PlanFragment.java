@@ -1,5 +1,6 @@
 package com.example.sofrtk.Views.UI.Main.Plan;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.example.sofrtk.R;
 import com.example.sofrtk.Views.Adapters.DateAdapter;
 import com.example.sofrtk.Views.Adapters.FavouriteMealsAdapter;
 import com.example.sofrtk.Views.Adapters.PlanMealsAdapter;
+import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class PlanFragment extends Fragment implements PlanView{
     LinearLayoutManager linearLayoutManager;
     PlanMealsAdapter planMealsAdapter;
     List<PlanMeal> planMealList = new ArrayList<>();
+    RxSharedPreferences rxSharedPreferences;
 
     public PlanFragment() {
         // Required empty public constructor
@@ -60,8 +63,10 @@ public class PlanFragment extends Fragment implements PlanView{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", getActivity().MODE_PRIVATE);
+        rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
+
         planPresenter = new PlanPresenterImp(this, Repository.getInstance(getActivity()));
-        //planPresenter.getPlanMeals("Adham");
 
         planMealsRecyclerView = view.findViewById(R.id.planMealsRecyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -82,8 +87,9 @@ public class PlanFragment extends Fragment implements PlanView{
             dateAdapter.setOnItemClickListener(new DateAdapter.OnItemClickListener() {
                 @Override
                 public void onClicks(String selectedDate) {
-                    planPresenter.getPlanMeals("Adham", selectedDate);
-                    Log.i("TAG", "onClicks: " + selectedDate);
+                    if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
+                        planPresenter.getPlanMeals(rxSharedPreferences.getString("userId").get(),selectedDate);
+                    }
                 }
             });
         });

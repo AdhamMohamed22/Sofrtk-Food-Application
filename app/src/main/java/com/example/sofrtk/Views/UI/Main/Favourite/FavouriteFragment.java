@@ -1,5 +1,6 @@
 package com.example.sofrtk.Views.UI.Main.Favourite;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Presenters.Favourite.FavouritePresenterImp;
 import com.example.sofrtk.R;
 import com.example.sofrtk.Views.Adapters.FavouriteMealsAdapter;
+import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,7 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
     LinearLayoutManager linearLayoutManager;
     FavouriteMealsAdapter favouriteMealsAdapter;
     List<FavouriteMeal> favouriteMealsList = new ArrayList<>();
+    RxSharedPreferences rxSharedPreferences;
 
 
     public FavouriteFragment() {
@@ -53,9 +57,14 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", getActivity().MODE_PRIVATE);
+        rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
+
         favouritePresenter = new FavouritePresenterImp(this, Repository.getInstance(getActivity()));
 
-        favouritePresenter.getFavouriteMeals("Adham");
+        if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
+            favouritePresenter.getFavouriteMeals(rxSharedPreferences.getString("userId").get());
+        }
 
         group = view.findViewById(R.id.group);
         favouritesRecyclerView = view.findViewById(R.id.favouritesRecyclerView);
@@ -64,8 +73,6 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
         favouritesRecyclerView.setLayoutManager(linearLayoutManager);
         favouriteMealsAdapter = new FavouriteMealsAdapter(getActivity(),favouriteMealsList);
         favouritesRecyclerView.setAdapter(favouriteMealsAdapter);
-
-
     }
 
     @Override
