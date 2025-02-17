@@ -64,7 +64,6 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
 
         if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
             favouritePresenter.getFavouriteMeals(rxSharedPreferences.getString("userId").get());
-            Log.i("TAG", "onViewCreated: " + rxSharedPreferences.getString("userId").get());
         }
 
         group = view.findViewById(R.id.group);

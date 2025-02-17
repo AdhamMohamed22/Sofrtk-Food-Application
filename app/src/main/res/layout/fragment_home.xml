@@ -47,7 +47,7 @@
                     android:fontFamily="@font/annapurna_sil"
                     android:text="Hello! Adham Mohamed"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/userImageView"

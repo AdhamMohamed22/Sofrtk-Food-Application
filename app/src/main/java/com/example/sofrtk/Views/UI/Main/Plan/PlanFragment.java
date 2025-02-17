@@ -89,7 +89,6 @@ public class PlanFragment extends Fragment implements PlanView{
                 public void onClicks(String selectedDate) {
                     if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
                         planPresenter.getPlanMeals(rxSharedPreferences.getString("userId").get(),selectedDate);
-                        Log.i("TAG", "onViewCreated: " + rxSharedPreferences.getString("userId").get());
                     }
                 }
             });
