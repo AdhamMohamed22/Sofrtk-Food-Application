@@ -71,4 +71,6 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.6.1"
     // RX Shared Preferences
     implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.1'
+    // Firebase RealTime DB
+    implementation("com.google.firebase:firebase-database")
 }

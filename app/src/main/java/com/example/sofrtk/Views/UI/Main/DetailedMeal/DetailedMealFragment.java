@@ -229,6 +229,7 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
             SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM dd", Locale.getDefault());
             String selectedDate = sdf.format(selection);
             mealDetailsPresenter.addToPlan(meal,selectedDate);
+            Log.i("TAG", "onClicks: " + rxSharedPreferences.getString("userId").get() + selectedDate);
         });
     }
 }
