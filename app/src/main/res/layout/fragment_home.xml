@@ -13,6 +13,12 @@
         android:layout_height="match_parent"
         android:paddingBottom="85dp">
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/mainGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="userCard,mealOfTheDay,randomMealRecyclerView,mainCategories,searchRecyclerView" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/userCard"
             android:layout_width="match_parent"
@@ -108,6 +114,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mainCategories" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/networkFailedLottie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/networkfailed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

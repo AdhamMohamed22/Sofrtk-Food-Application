@@ -133,10 +133,7 @@ public class SignUpFragment extends Fragment {
 
         guestCardView = view.findViewById(R.id.guestCardView);
         guestCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            getActivity().finish();
+            navigateToMaiNActivity();
         });
 
     }
@@ -169,19 +166,10 @@ public class SignUpFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(getActivity(), "Sign-up successful!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Signed-up successfully!", Toast.LENGTH_SHORT).show();
                             String userId = authResult.getUser().getUid();
                             saveUserToPreferences(userId, email);
-
-                            // Navigate to MainActivity
-                            Intent intent = new Intent(getActivity(), MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
-
-                            // If you need to pass data to MainActivity, use:
-                            // intent.putExtra("userEmail", userEmail);
-
-                            startActivity(intent);
-                            getActivity().finish();
+                            navigateToMaiNActivity();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -217,20 +205,11 @@ public class SignUpFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(getActivity(), "Sign-up With Google successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Sign-up With Google successfully!", Toast.LENGTH_SHORT).show();
                         String userId = authResult.getUser().getUid();
                         String email = authResult.getUser().getEmail();
                         saveUserToPreferences(userId, email);
-
-                        // Navigate to MainActivity
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
-
-                        // If you need to pass data to MainActivity, use:
-                        // intent.putExtra("userEmail", userEmail);
-
-                        startActivity(intent);
-                        getActivity().finish();
+                        navigateToMaiNActivity();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -244,6 +223,13 @@ public class SignUpFragment extends Fragment {
         rxSharedPreferences.getString("userId").set(userId);
         rxSharedPreferences.getString("email").set(email);
         rxSharedPreferences.getBoolean("isLoggedIn").set(true);
+    }
+
+    public void navigateToMaiNActivity(){
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
     }
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,8 +17,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.sofrtk.Firebase.Firebase;
 import com.example.sofrtk.Models.Repository.Repository;
+import com.example.sofrtk.NetworkUtils.NetworkConnection;
+import com.example.sofrtk.NetworkUtils.NetworkUtils;
 import com.example.sofrtk.Presenters.Home.HomePresenterImp;
 import com.example.sofrtk.Views.Adapters.CategoryAdapter;
 import com.example.sofrtk.Views.Adapters.RandomMealAdapter;
@@ -29,7 +33,7 @@ import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements HomeView {
+public class HomeFragment extends Fragment implements HomeView , NetworkConnection {
     HomePresenterImp homePresenter;
     RecyclerView randomMealRecyclerView;
     LinearLayoutManager mealLinearLayoutManager;
@@ -40,6 +44,8 @@ public class HomeFragment extends Fragment implements HomeView {
     ArrayList<Category> categoriesList = new ArrayList<>();
     TextView userName;
     RxSharedPreferences rxSharedPreferences;
+    Group mainGroup;
+    LottieAnimationView networkFailedLottie;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -61,6 +67,18 @@ public class HomeFragment extends Fragment implements HomeView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mainGroup = view.findViewById(R.id.mainGroup);
+        networkFailedLottie = view.findViewById(R.id.networkFailedLottie);
+
+        homePresenter = new HomePresenterImp(this, Repository.getInstance(getActivity()));
+
+        if(NetworkUtils.isNetworkAvailable(requireActivity())){
+            onNetworkConnected();
+        } else {
+            onNetworkDisconnected();
+        }
+        NetworkUtils.registerNetworkCallback(requireActivity(),this);
+
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", getActivity().MODE_PRIVATE);
         rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
 
@@ -74,10 +92,6 @@ public class HomeFragment extends Fragment implements HomeView {
 
         Firebase.getInstance().updateFavouriteMeals(rxSharedPreferences.getString("userId").get(),requireContext());
         Firebase.getInstance().updatePlanMeals(rxSharedPreferences.getString("userId").get(),requireContext());
-
-        homePresenter = new HomePresenterImp(this, Repository.getInstance(getActivity()));
-        homePresenter.setRandomMeal();
-        homePresenter.setCategories();
 
         randomMealRecyclerView = view.findViewById(R.id.randomMealRecyclerView);
         categoryRecyclerView = view.findViewById(R.id.searchRecyclerView);
@@ -129,5 +143,19 @@ public class HomeFragment extends Fragment implements HomeView {
 
     public void navigateToDetailedMealFragment(String id, RandomMeal randomMeal){
         Navigation.findNavController(requireView()).navigate(HomeFragmentDirections.actionHomeFragmentToDetailedMealFragment(id,randomMeal));
+    }
+
+    @Override
+    public void onNetworkConnected() {
+        mainGroup.setVisibility(View.VISIBLE);
+        networkFailedLottie.setVisibility(View.GONE);
+        homePresenter.setRandomMeal();
+        homePresenter.setCategories();
+    }
+
+    @Override
+    public void onNetworkDisconnected() {
+        mainGroup.setVisibility(View.GONE);
+        networkFailedLottie.setVisibility(View.VISIBLE);
     }
 }
