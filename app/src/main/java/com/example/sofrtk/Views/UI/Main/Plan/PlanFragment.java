@@ -1,5 +1,6 @@
 package com.example.sofrtk.Views.UI.Main.Plan;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -89,6 +90,7 @@ public class PlanFragment extends Fragment implements PlanView{
                 public void onClicks(String selectedDate) {
                     if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
                         planPresenter.getPlanMeals(rxSharedPreferences.getString("userId").get(),selectedDate);
+                        Log.i("TAG", "onClicks: " + rxSharedPreferences.getString("userId").get() + selectedDate);
                     }
                 }
             });
@@ -123,6 +125,11 @@ public class PlanFragment extends Fragment implements PlanView{
     @Override
     public void deletePlanMealsError(String errorMsg) {
         Toast.makeText(getActivity(),errorMsg,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Activity getViewActivity() {
+        return requireActivity();
     }
 
 

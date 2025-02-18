@@ -1,5 +1,6 @@
 package com.example.sofrtk.Views.UI.Main.Favourite;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -108,5 +109,10 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
     @Override
     public void deleteFavouriteMealsError(String errorMsg) {
         Toast.makeText(getActivity(),errorMsg,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Activity getViewActivity() {
+        return requireActivity();
     }
 }

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sofrtk.Firebase.Firebase;
 import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Presenters.Home.HomePresenterImp;
 import com.example.sofrtk.Views.Adapters.CategoryAdapter;
@@ -70,6 +71,9 @@ public class HomeFragment extends Fragment implements HomeView {
         } else {
             userName.setText("Welcome! Guest");
         }
+
+        Firebase.getInstance().updateFavouriteMeals(rxSharedPreferences.getString("userId").get(),requireContext());
+        Firebase.getInstance().updatePlanMeals(rxSharedPreferences.getString("userId").get(),requireContext());
 
         homePresenter = new HomePresenterImp(this, Repository.getInstance(getActivity()));
         homePresenter.setRandomMeal();

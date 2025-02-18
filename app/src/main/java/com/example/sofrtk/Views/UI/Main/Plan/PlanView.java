@@ -1,5 +1,7 @@
 package com.example.sofrtk.Views.UI.Main.Plan;
 
+import android.app.Activity;
+
 import com.example.sofrtk.DB.Model.FavouriteMeal;
 import com.example.sofrtk.DB.Model.PlanMeal;
 
@@ -10,5 +12,5 @@ public interface PlanView {
     void showPlanMealsError(String errorMsg);
     void deletePlanMeals(PlanMeal planMeal);
     void deletePlanMealsError(String errorMsg);
-
+    Activity getViewActivity();
 }
