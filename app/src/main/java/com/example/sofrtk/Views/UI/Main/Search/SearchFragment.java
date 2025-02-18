@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,11 +21,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.sofrtk.Models.DTOs.Category;
 import com.example.sofrtk.Models.DTOs.Country;
 import com.example.sofrtk.Models.DTOs.Ingredient;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.Repository.Repository;
+import com.example.sofrtk.NetworkUtils.NetworkConnection;
+import com.example.sofrtk.NetworkUtils.NetworkUtils;
 import com.example.sofrtk.Presenters.Search.SearchPresenterImp;
 import com.example.sofrtk.R;
 import com.example.sofrtk.Views.Adapters.CountryAdapter;
@@ -38,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SearchFragment extends Fragment implements com.example.sofrtk.Views.UI.Main.Search.SearchView {
+public class SearchFragment extends Fragment implements com.example.sofrtk.Views.UI.Main.Search.SearchView , NetworkConnection {
     SearchPresenterImp searchPresenter;
     RecyclerView searchRecyclerView;
     CountryAdapter countryAdapter;
@@ -58,6 +62,8 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
     Chip countryChip;
     Chip ingredientChip;
     SearchView searchView;
+    Group mainGroup;
+    LottieAnimationView networkFailedLottie;
 
 
     public SearchFragment() {
@@ -81,6 +87,9 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mainGroup = view.findViewById(R.id.mainGroup);
+        networkFailedLottie = view.findViewById(R.id.networkFailedLottie);
+
         searchView = view.findViewById(R.id.searchView);
         EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
         searchEditText.setTextColor(Color.WHITE);
@@ -91,6 +100,13 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
         ingredientChip = view.findViewById(R.id.ingredientChip);
 
         searchPresenter = new SearchPresenterImp(this, Repository.getInstance(getActivity()));
+
+        if(NetworkUtils.isNetworkAvailable(requireActivity())){
+            onNetworkConnected();
+        } else {
+            onNetworkDisconnected();
+        }
+        NetworkUtils.registerNetworkCallback(requireActivity(),this);
 
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         searchGridLayoutManager = new GridLayoutManager(getActivity(),3);
@@ -257,4 +273,15 @@ public class SearchFragment extends Fragment implements com.example.sofrtk.Views
         Navigation.findNavController(requireView()).navigate(SearchFragmentDirections.actionSearchFragmentToFilteredMealsFragment(chipType,filterName));
     }
 
+    @Override
+    public void onNetworkConnected() {
+        mainGroup.setVisibility(View.VISIBLE);
+        networkFailedLottie.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onNetworkDisconnected() {
+        mainGroup.setVisibility(View.GONE);
+        networkFailedLottie.setVisibility(View.VISIBLE);
+    }
 }
