@@ -17,12 +17,12 @@ import java.util.ArrayList;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngridentViewHolder> {
     Context context;
-    ArrayList<String> ingridentsList;
+    ArrayList<String> ingredientsList;
     ArrayList<String> measuresList;
 
-    public IngredientAdapter(Context context, ArrayList<String> ingridentsList, ArrayList<String> measuresList) {
+    public IngredientAdapter(Context context, ArrayList<String> ingredientsList, ArrayList<String> measuresList) {
         this.context = context;
-        this.ingridentsList = ingridentsList;
+        this.ingredientsList = ingredientsList;
         this.measuresList = measuresList;
     }
 
@@ -30,20 +30,20 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     @Override
     public IngridentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.ingredient_item,parent,false);
+        View view = inflater.inflate(R.layout.ingredient_item, parent, false);
         IngridentViewHolder myviewHolder = new IngridentViewHolder(view);
         return myviewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull IngridentViewHolder holder, int position) {
-        String currentIngrident = ingridentsList.get(position);
-        holder.ingridientNameTxt.setText(currentIngrident);
+        String currentIngredient = ingredientsList.get(position);
+        holder.ingredientNameTxt.setText(currentIngredient);
 
         String currentMeasure = measuresList.get(position);
         holder.measureNameTxt.setText(currentMeasure);
 
-        String imageUrl = "https://www.themealdb.com/images/ingredients/" + currentIngrident + "-Small.png";
+        String imageUrl = "https://www.themealdb.com/images/ingredients/" + currentIngredient + "-Small.png";
         Glide.with(context)
                 .load(imageUrl)
                 .into(holder.ingridientImageView);
@@ -51,18 +51,18 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     @Override
     public int getItemCount() {
-        return ingridentsList.size();
+        return ingredientsList.size();
     }
 
-    class IngridentViewHolder extends RecyclerView.ViewHolder{
+    class IngridentViewHolder extends RecyclerView.ViewHolder {
         ImageView ingridientImageView;
-        TextView ingridientNameTxt;
+        TextView ingredientNameTxt;
         TextView measureNameTxt;
 
         public IngridentViewHolder(@NonNull View itemView) {
             super(itemView);
             ingridientImageView = itemView.findViewById(R.id.ingridientImageView);
-            ingridientNameTxt = itemView.findViewById(R.id.ingridientNameTxt);
+            ingredientNameTxt = itemView.findViewById(R.id.ingridientNameTxt);
             measureNameTxt = itemView.findViewById(R.id.measureNameTxt);
         }
     }

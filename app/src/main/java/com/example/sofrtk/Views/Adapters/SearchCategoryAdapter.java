@@ -36,7 +36,7 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
     @Override
     public SearchCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.search_category_item,parent,false);
+        View view = inflater.inflate(R.layout.search_category_item, parent, false);
         SearchCategoryViewHolder myviewHolder = new SearchCategoryViewHolder(view);
         return myviewHolder;
     }
@@ -45,7 +45,7 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
     public void onBindViewHolder(@NonNull SearchCategoryViewHolder holder, int position) {
         Category currentCategory = categoriesList.get(position);
         holder.searchCategoryNameTxt.setText(currentCategory.getCategoryTitle());
-        Glide.with(context).load(currentCategory.getCategoryImage()).apply(new RequestOptions().override(225,225)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.searchCategoryImageView);
+        Glide.with(context).load(currentCategory.getCategoryImage()).apply(new RequestOptions().override(225, 225)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.searchCategoryImageView);
 
         holder.searchCategoryCard.setOnClickListener(v -> {
             onItemClickListener.onClicks(currentCategory.getCategoryTitle());
@@ -64,10 +64,11 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
         notifyDataSetChanged();
     }
 
-    class SearchCategoryViewHolder extends RecyclerView.ViewHolder{
+    class SearchCategoryViewHolder extends RecyclerView.ViewHolder {
         ImageView searchCategoryImageView;
         TextView searchCategoryNameTxt;
         CardView searchCategoryCard;
+
         public SearchCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             searchCategoryImageView = itemView.findViewById(R.id.searchCategoryImageView);
@@ -76,7 +77,7 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
         }
     }
 
-    public interface OnItemClickListener{
-        public void onClicks(String filterName);
+    public interface OnItemClickListener {
+        void onClicks(String filterName);
     }
 }

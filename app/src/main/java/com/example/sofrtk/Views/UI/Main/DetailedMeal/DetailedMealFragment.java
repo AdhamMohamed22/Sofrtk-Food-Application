@@ -145,7 +145,7 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
             if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
                 mealDetailsPresenter.addToFavourite(meal);
             } else {
-                Toast.makeText(getActivity(),"Not Available Feature For Guest, You must Register!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Not Available Feature For Guest,           You must Register!",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -153,7 +153,7 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
             if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
                 handleDatePicker(v,meal);
             } else {
-                Toast.makeText(getActivity(),"Not Available Feature For Guest, You must Register!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Not Available Feature For Guest,           You must Register!",Toast.LENGTH_LONG).show();
             }
         });
     }

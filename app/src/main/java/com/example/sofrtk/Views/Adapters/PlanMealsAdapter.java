@@ -21,7 +21,7 @@ import com.example.sofrtk.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.PlanMealsViewHolder>{
+public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.PlanMealsViewHolder> {
     Context context;
     List<PlanMeal> planMealsList;
     PlanMealsAdapter.OnItemClickListener onItemClickListener;
@@ -39,7 +39,7 @@ public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.Plan
     @Override
     public PlanMealsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.plan_meal_item,parent,false);
+        View view = inflater.inflate(R.layout.plan_meal_item, parent, false);
         PlanMealsViewHolder myviewHolder = new PlanMealsViewHolder(view);
         return myviewHolder;
     }
@@ -48,7 +48,7 @@ public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.Plan
     public void onBindViewHolder(@NonNull PlanMealsViewHolder holder, int position) {
         PlanMeal currentPlanMeal = planMealsList.get(position);
         holder.planMealNameTxt.setText(currentPlanMeal.getMeal().getStrMeal());
-        Glide.with(context).load(currentPlanMeal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(200,200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.planMealImageView);
+        Glide.with(context).load(currentPlanMeal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(200, 200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.planMealImageView);
 
         holder.unPlanCardView.setOnClickListener(v -> {
             onItemClickListener.onClicks(currentPlanMeal);
@@ -66,15 +66,16 @@ public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.Plan
         notifyDataSetChanged();
     }
 
-    public void removeItem(PlanMeal planMeal){
+    public void removeItem(PlanMeal planMeal) {
         planMealsList.remove(planMeal);
         notifyDataSetChanged();
     }
 
-    class PlanMealsViewHolder extends RecyclerView.ViewHolder{
+    class PlanMealsViewHolder extends RecyclerView.ViewHolder {
         ImageView planMealImageView;
         TextView planMealNameTxt;
         CardView unPlanCardView;
+
         public PlanMealsViewHolder(@NonNull View itemView) {
             super(itemView);
             planMealImageView = itemView.findViewById(R.id.planMealImageView);
@@ -83,7 +84,7 @@ public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.Plan
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onClicks(PlanMeal planMeal);
     }
 }

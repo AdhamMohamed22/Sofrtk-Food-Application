@@ -20,7 +20,7 @@ import com.example.sofrtk.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAdapter.FavouriteMealsViewHolder>{
+public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAdapter.FavouriteMealsViewHolder> {
     Context context;
     List<FavouriteMeal> favouriteMealsList;
     FavouriteMealsAdapter.OnItemClickListener onItemClickListener;
@@ -38,7 +38,7 @@ public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAd
     @Override
     public FavouriteMealsAdapter.FavouriteMealsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.favourite_meal_item,parent,false);
+        View view = inflater.inflate(R.layout.favourite_meal_item, parent, false);
         FavouriteMealsViewHolder myviewHolder = new FavouriteMealsViewHolder(view);
         return myviewHolder;
     }
@@ -47,7 +47,7 @@ public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAd
     public void onBindViewHolder(@NonNull FavouriteMealsAdapter.FavouriteMealsViewHolder holder, int position) {
         FavouriteMeal currentFavouriteMeal = favouriteMealsList.get(position);
         holder.favouriteMealNameTxt.setText(currentFavouriteMeal.getMeal().getStrMeal());
-        Glide.with(context).load(currentFavouriteMeal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(200,200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.favouriteMealImageView);
+        Glide.with(context).load(currentFavouriteMeal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(200, 200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.favouriteMealImageView);
 
         holder.unFavouriteCardView.setOnClickListener(v -> {
             onItemClickListener.onClicks(currentFavouriteMeal);
@@ -65,15 +65,16 @@ public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAd
         notifyDataSetChanged();
     }
 
-    public void removeItem(FavouriteMeal favouriteMeal){
+    public void removeItem(FavouriteMeal favouriteMeal) {
         favouriteMealsList.remove(favouriteMeal);
         notifyDataSetChanged();
     }
 
-    class FavouriteMealsViewHolder extends RecyclerView.ViewHolder{
+    class FavouriteMealsViewHolder extends RecyclerView.ViewHolder {
         ImageView favouriteMealImageView;
         TextView favouriteMealNameTxt;
         CardView unFavouriteCardView;
+
         public FavouriteMealsViewHolder(@NonNull View itemView) {
             super(itemView);
             favouriteMealImageView = itemView.findViewById(R.id.favouriteMealImageView);
@@ -82,7 +83,7 @@ public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAd
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onClicks(FavouriteMeal favouriteMeal);
     }
 }

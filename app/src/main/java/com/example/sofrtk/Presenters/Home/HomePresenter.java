@@ -2,6 +2,7 @@ package com.example.sofrtk.Presenters.Home;
 
 
 public interface HomePresenter {
-     void setRandomMeal();
-     void setCategories();
+    void setRandomMeal();
+
+    void setCategories();
 }

@@ -30,4 +30,14 @@
     <string name="plan_meal_name">Plan Meal Name</string>
     <string name="country_name">Country Name</string>
     <string name="ingredient">ingredient</string>
+    <string name="welcome_back">"Welcome back: "</string>
+    <string name="error_getting_email">Error getting email</string>
+    <string name="error_checking_login_status">Error checking login status</string>
+    <string name="invalid_email_format">Invalid Email Format</string>
+    <string name="this_field_cannot_be_less_than">"This Field Cannot Be Less Than "</string>
+    <string name="characters">" Characters"</string>
+    <string name="password_must_be_the_same">Password Must Be The Same</string>
+    <string name="this_field_cannot_be_empty">This Field Cannot Be Empty</string>
+    <string name="welcome">"Welcome! "</string>
+    <string name="welcome_guest">Welcome! Guest</string>
 </resources>

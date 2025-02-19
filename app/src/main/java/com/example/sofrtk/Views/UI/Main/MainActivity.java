@@ -68,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.favouriteFragment);
                 return true;
             } else {
-                Toast.makeText(this,"Not Available Feature For Guest, You must Register!",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Not Available Feature For Guest,           You must Register!",Toast.LENGTH_LONG).show();
             }
         } else if (id == R.id.planFragment) {
             if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()){
                 navController.navigate(R.id.planFragment);
                 return true;
             } else {
-                Toast.makeText(this,"Not Available Feature For Guest, You must Register!",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Not Available Feature For Guest,           You must Register!",Toast.LENGTH_LONG).show();
             }
         } else if (id == R.id.logoutFragment) {
             if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()){

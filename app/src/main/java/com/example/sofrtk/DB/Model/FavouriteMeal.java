@@ -8,7 +8,7 @@ import com.example.sofrtk.DB.Converters;
 import com.example.sofrtk.Models.DTOs.RandomMeal;
 
 
-@Entity(tableName = "favourite_meals_table" , primaryKeys = {"userId","mealId"})
+@Entity(tableName = "favourite_meals_table", primaryKeys = {"userId", "mealId"})
 @TypeConverters(Converters.class)
 public class FavouriteMeal {
     @NonNull
@@ -16,7 +16,9 @@ public class FavouriteMeal {
     @NonNull
     public String mealId;
     public RandomMeal randomMeal;
-    public FavouriteMeal(){}
+
+    public FavouriteMeal() {
+    }
 
     public FavouriteMeal(String userId, String mealId, RandomMeal randomMeal) {
         this.userId = userId;

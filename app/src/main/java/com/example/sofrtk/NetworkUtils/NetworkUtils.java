@@ -20,7 +20,7 @@ public class NetworkUtils {
         return false;
     }
 
-    public static void registerNetworkCallback(Context context,NetworkConnection networkConnection) {
+    public static void registerNetworkCallback(Context context, NetworkConnection networkConnection) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -34,14 +34,18 @@ public class NetworkUtils {
                 @Override
                 public void onAvailable(Network network) {
                     super.onAvailable(network);
-                    new android.os.Handler(Looper.getMainLooper()).post(() -> {networkConnection.onNetworkConnected();});
+                    new android.os.Handler(Looper.getMainLooper()).post(() -> {
+                        networkConnection.onNetworkConnected();
+                    });
                 }
 
                 @Override
                 public void onLost(Network network) {
                     super.onLost(network);
                     // Internet is lost
-                    new android.os.Handler(Looper.getMainLooper()).post(() -> {networkConnection.onNetworkDisconnected();});
+                    new android.os.Handler(Looper.getMainLooper()).post(() -> {
+                        networkConnection.onNetworkDisconnected();
+                    });
                 }
             });
         }

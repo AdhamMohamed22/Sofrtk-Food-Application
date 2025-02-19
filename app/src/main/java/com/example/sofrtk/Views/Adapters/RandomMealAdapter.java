@@ -41,7 +41,7 @@ public class RandomMealAdapter extends RecyclerView.Adapter<RandomMealAdapter.Ra
     @Override
     public RandomMealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.random_meal_item,parent,false);
+        View view = inflater.inflate(R.layout.random_meal_item, parent, false);
         RandomMealViewHolder myviewHolder = new RandomMealViewHolder(view);
         return myviewHolder;
     }
@@ -52,7 +52,7 @@ public class RandomMealAdapter extends RecyclerView.Adapter<RandomMealAdapter.Ra
         holder.mealNameTxt.setText(currentRandomMeal.getStrMeal());
         holder.mealCategoryTxt.setText(currentRandomMeal.getStrCategory());
         holder.mealAreaTxt.setText(currentRandomMeal.getStrArea());
-        Glide.with(context).load(currentRandomMeal.getStrMealThumb()).apply(new RequestOptions().override(200,200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.mealImageView);
+        Glide.with(context).load(currentRandomMeal.getStrMealThumb()).apply(new RequestOptions().override(200, 200)).into(holder.mealImageView);
         holder.randomMealCard.setOnClickListener(v -> {
             onItemClickListener.onClicks(currentRandomMeal);
         });
@@ -69,7 +69,7 @@ public class RandomMealAdapter extends RecyclerView.Adapter<RandomMealAdapter.Ra
         notifyDataSetChanged();
     }
 
-    class RandomMealViewHolder extends RecyclerView.ViewHolder{
+    class RandomMealViewHolder extends RecyclerView.ViewHolder {
         ImageView mealImageView;
         TextView mealNameTxt;
         TextView mealCategoryTxt;
@@ -86,7 +86,7 @@ public class RandomMealAdapter extends RecyclerView.Adapter<RandomMealAdapter.Ra
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onClicks(RandomMeal randomMeal);
     }
 }

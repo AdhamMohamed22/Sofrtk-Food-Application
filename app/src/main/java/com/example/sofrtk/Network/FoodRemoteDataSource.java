@@ -18,7 +18,7 @@ public class FoodRemoteDataSource {
     public static FoodRemoteDataSource foodRemoteDataSource = null;
     APIDataService apiDataService;
 
-    private FoodRemoteDataSource(){
+    private FoodRemoteDataSource() {
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .baseUrl(BaseUrl)
@@ -27,36 +27,42 @@ public class FoodRemoteDataSource {
         apiDataService = retrofit.create(APIDataService.class);
     }
 
-    public static FoodRemoteDataSource getInstance(){
-        if(foodRemoteDataSource == null){
+    public static FoodRemoteDataSource getInstance() {
+        if (foodRemoteDataSource == null) {
             foodRemoteDataSource = new FoodRemoteDataSource();
         }
         return foodRemoteDataSource;
     }
 
-    public Single<RandomMealResponse> getRandomMeal(){
+    public Single<RandomMealResponse> getRandomMeal() {
         return apiDataService.getRandomMeal();
     }
 
-    public Observable<CategoryResponse> getCategories(){
+    public Observable<CategoryResponse> getCategories() {
         return apiDataService.getCategories();
     }
-    public Observable<CountryResponse> getCountries(){
+
+    public Observable<CountryResponse> getCountries() {
         return apiDataService.getCountries("list");
     }
-    public Observable<IngredientResponse> getIngredients(){
+
+    public Observable<IngredientResponse> getIngredients() {
         return apiDataService.getIngredients("list");
     }
-    public Observable<FilterMealResponse> getFilterMealsByCategory(String filterCategory){
+
+    public Observable<FilterMealResponse> getFilterMealsByCategory(String filterCategory) {
         return apiDataService.getFilterMealsByCategory(filterCategory);
     }
-    public Observable<FilterMealResponse> getFilterMealsByArea(String filterArea){
+
+    public Observable<FilterMealResponse> getFilterMealsByArea(String filterArea) {
         return apiDataService.getFilterMealsByArea(filterArea);
     }
-    public Observable<FilterMealResponse> getFilterMealsByIngredient(String filterIngredient){
+
+    public Observable<FilterMealResponse> getFilterMealsByIngredient(String filterIngredient) {
         return apiDataService.getFilterMealsByIngredient(filterIngredient);
     }
-    public Observable<RandomMealResponse> getMealDetailsById(String mealId){
+
+    public Observable<RandomMealResponse> getMealDetailsById(String mealId) {
         return apiDataService.getMealDetailsById(mealId);
     }
 }

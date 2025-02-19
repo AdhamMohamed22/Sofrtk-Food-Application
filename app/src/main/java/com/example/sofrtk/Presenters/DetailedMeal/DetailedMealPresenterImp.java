@@ -43,41 +43,41 @@ public class DetailedMealPresenterImp implements DetailedMealPresenter {
 
     @Override
     public void addToFavourite(RandomMeal meal) {
-        FavouriteMeal favouriteMeal = new FavouriteMeal(rxSharedPreferences.getString("userId").get(),meal.getIdMeal(),meal);
-        Firebase.getInstance().insertFavouriteMeal(favouriteMeal,rxSharedPreferences.getString("userId").get(),meal.getIdMeal())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    repository.insertFavouriteMeal(favouriteMeal)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(
-                                                    () -> detailedMealView.onInsertFavouriteSuccess(),
-                                                    error -> detailedMealView.onInsertFavouriteFail(error.getMessage())
-                                            );
-                                } else {
-                                    detailedMealView.showMealDetailsError(task.getException().toString());
-                                }
-                            }
-                        });
+        FavouriteMeal favouriteMeal = new FavouriteMeal(rxSharedPreferences.getString("userId").get(), meal.getIdMeal(), meal);
+        Firebase.getInstance().insertFavouriteMeal(favouriteMeal, rxSharedPreferences.getString("userId").get(), meal.getIdMeal())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            repository.insertFavouriteMeal(favouriteMeal)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            () -> detailedMealView.onInsertFavouriteSuccess(),
+                                            error -> detailedMealView.onInsertFavouriteFail(error.getMessage())
+                                    );
+                        } else {
+                            detailedMealView.showMealDetailsError(task.getException().toString());
+                        }
+                    }
+                });
     }
 
     @Override
-    public void addToPlan(RandomMeal meal,String selectedDate) {
-        PlanMeal planMeal = new PlanMeal(rxSharedPreferences.getString("userId").get(),meal.getIdMeal(),meal,selectedDate);
-        Firebase.getInstance().insertPlanMeal(planMeal,rxSharedPreferences.getString("userId").get(),meal.getIdMeal(),selectedDate)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                repository.insertPlanMeal(planMeal)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(
-                                                () -> detailedMealView.onInsertPlanSuccess(),
-                                                error -> detailedMealView.onInsertPlanFail(error.getMessage())
-                                        );
-                            }
-                        });
+    public void addToPlan(RandomMeal meal, String selectedDate) {
+        PlanMeal planMeal = new PlanMeal(rxSharedPreferences.getString("userId").get(), meal.getIdMeal(), meal, selectedDate);
+        Firebase.getInstance().insertPlanMeal(planMeal, rxSharedPreferences.getString("userId").get(), meal.getIdMeal(), selectedDate)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        repository.insertPlanMeal(planMeal)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                        () -> detailedMealView.onInsertPlanSuccess(),
+                                        error -> detailedMealView.onInsertPlanFail(error.getMessage())
+                                );
+                    }
+                });
     }
 }

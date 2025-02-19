@@ -25,24 +25,27 @@ import com.example.sofrtk.R;
 import com.example.sofrtk.Views.UI.Main.MainActivity;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 public class SplashFragment extends Fragment {
-    ImageView logo;
-    LottieAnimationView lottieAnimationView;
+    private ImageView logo;
+    private LottieAnimationView lottieAnimationView;
     private RxSharedPreferences rxSharedPreferences;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable(); // For managing Rx subscriptions
 
     public SplashFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear(); // Dispose subscriptions to avoid memory leaks
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_splash, container, false);
     }
 
@@ -56,7 +59,11 @@ public class SplashFragment extends Fragment {
         logo = view.findViewById(R.id.sofrtkLogo);
         lottieAnimationView = view.findViewById(R.id.lottie);
 
-        //logo.animate().translationY(1400).setDuration(1000).setStartDelay(4000);
+        animateLogo();
+        playLottieAnimation(view);
+    }
+
+    private void animateLogo() {
         logo.setAlpha(0f);
         logo.setScaleX(0.5f);
         logo.setScaleY(0.5f);
@@ -70,55 +77,63 @@ public class SplashFragment extends Fragment {
                 .setDuration(1200)
                 .setStartDelay(500)
                 .setInterpolator(new AccelerateDecelerateInterpolator());
+    }
 
-
+    private void playLottieAnimation(View view) {
         lottieAnimationView.animate()
                 .translationY(0)
                 .setDuration(1000)
                 .setStartDelay(500)
                 .alpha(1f)
-                .withEndAction(() -> {
-                    lottieAnimationView.playAnimation();
-                });
+                .withEndAction(() -> lottieAnimationView.playAnimation());
 
         lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                checkUserSession();
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_splashFragment_to_signUpFragment);
+                checkUserSession(view);
             }
         });
     }
 
-    private void checkUserSession() {
-            rxSharedPreferences.getBoolean("isLoggedIn", false)
-                    .asObservable()
-                    .subscribe(
-                            isLoggedIn -> {
-                                if (isLoggedIn) {
-                                    rxSharedPreferences.getString("email").asObservable()
-                                            .subscribe(email -> {
-                                                // Check if the fragment is still attached before showing the toast
-                                                if (isAdded() && getActivity() != null) {
-                                                    Toast.makeText(getActivity(), "Welcome back: " + email, Toast.LENGTH_SHORT).show();
-                                                }
-                                                // Navigate to MainActivity if logged in
-                                                Intent intent = new Intent(getActivity(), MainActivity.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
-                                                startActivity(intent);
-                                                getActivity().finish();
-                                            }, throwable -> {
-                                                // Handle error while fetching email
-                                                Log.e("SplashFragment", "Error getting email", throwable);
-                                            });
-                                }
-                            },
-                            throwable -> {
-                                // Handle error while checking login status
-                                Log.e("SplashFragment", "Error checking login status", throwable);
+    private void checkUserSession(View view) {
+        Disposable disposable = rxSharedPreferences.getBoolean("isLoggedIn", false)
+                .asObservable()
+                .subscribe(
+                        isLoggedIn -> {
+                            if (isLoggedIn) {
+                                navigateToMainActivity();
+                            } else {
+                                navigateToSignUpFragment(view);
                             }
-                    );
-        }
+                        },
+                        throwable -> {
+                            Log.e("SplashFragment", "Error checking login status", throwable);
+                            navigateToSignUpFragment(view); // Navigate to sign up on error
+                        }
+                );
 
+        compositeDisposable.add(disposable); // Add disposable to manage lifecycle
+    }
+
+    private void navigateToMainActivity() {
+        if (isAdded() && getActivity() != null) {
+            Disposable disposable = rxSharedPreferences.getString("email").asObservable()
+                    .subscribe(email -> {
+                        Toast.makeText(getActivity(), getString(R.string.welcome_back) + email, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }, throwable -> Log.e("SplashFragment", "Error getting email", throwable));
+
+            compositeDisposable.add(disposable);
+        }
+    }
+
+    private void navigateToSignUpFragment(View view) {
+        if (isAdded() && getActivity() != null) {
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_splashFragment_to_signUpFragment);
+        }
+    }
 }

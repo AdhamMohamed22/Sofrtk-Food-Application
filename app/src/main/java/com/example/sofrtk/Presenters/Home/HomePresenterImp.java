@@ -16,7 +16,7 @@ public class HomePresenterImp implements HomePresenter {
     }
 
     @Override
-    public void setRandomMeal(){
+    public void setRandomMeal() {
         repository.getRandomMeal()
                 .subscribeOn(Schedulers.io())
                 .map(randomMealResponse -> randomMealResponse.randomMealsList)
@@ -24,7 +24,9 @@ public class HomePresenterImp implements HomePresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         randomMeal -> homeView.showRandomMeal(randomMeal),
-                        error -> {homeView.showRandomMealError(error.getMessage());});
+                        error -> {
+                            homeView.showRandomMealError(error.getMessage());
+                        });
     }
 
     @Override

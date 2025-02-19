@@ -12,14 +12,16 @@ import com.example.sofrtk.DB.Model.FavouriteMeal;
 import com.example.sofrtk.DB.Model.PlanMeal;
 
 
-@Database(entities = {FavouriteMeal.class, PlanMeal.class},version = 3)
+@Database(entities = {FavouriteMeal.class, PlanMeal.class}, version = 3)
 @TypeConverters(Converters.class)
 public abstract class AppDB extends RoomDatabase {
     private static AppDB instance = null;
+
     public abstract MealDAO getMealDAO();
-    public static synchronized AppDB getInstance(Context context){
-        if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(),AppDB.class,"MealsDB").fallbackToDestructiveMigration().build();
+
+    public static synchronized AppDB getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(), AppDB.class, "MealsDB").fallbackToDestructiveMigration().build();
         }
         return instance;
     }

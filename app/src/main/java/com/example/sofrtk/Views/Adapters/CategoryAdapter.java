@@ -36,7 +36,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.category_item,parent,false);
+        View view = inflater.inflate(R.layout.category_item, parent, false);
         CategoryViewHolder myviewHolder = new CategoryViewHolder(view);
         return myviewHolder;
     }
@@ -46,12 +46,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category currentCategory = categoriesList.get(position);
         holder.categoryNameTxt.setText(currentCategory.getCategoryTitle());
         holder.categoryDescriptionTxt.setText(currentCategory.getCategoryDescription());
-        Glide.with(context).load(currentCategory.getCategoryImage()).apply(new RequestOptions().override(225,225)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.categoryImageView);
-        /*
-        holder.categoryCard.setOnClickListener(v -> {
-            onItemClickListener.onClicks(Integer.parseInt(currentCategory.getCategoryId()));
-        });
-         */
+        Glide.with(context).load(currentCategory.getCategoryImage()).apply(new RequestOptions().override(225, 225)).into(holder.categoryImageView);
     }
 
     @Override
@@ -65,11 +60,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         notifyDataSetChanged();
     }
 
-    class CategoryViewHolder extends RecyclerView.ViewHolder{
+    class CategoryViewHolder extends RecyclerView.ViewHolder {
         ImageView categoryImageView;
         TextView categoryNameTxt;
         TextView categoryDescriptionTxt;
         CardView categoryCard;
+
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryImageView = itemView.findViewById(R.id.categoryImageView);
@@ -79,7 +75,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
     }
 
-    public interface OnItemClickListener{
-        public void onClicks(String id);
+    public interface OnItemClickListener {
+        void onClicks(String id);
     }
 }
