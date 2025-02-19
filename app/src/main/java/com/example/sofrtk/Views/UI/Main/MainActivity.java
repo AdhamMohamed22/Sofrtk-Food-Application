@@ -19,7 +19,12 @@ import com.example.sofrtk.NetworkUtils.NetworkUtils;
 import com.example.sofrtk.R;
 import com.example.sofrtk.Views.UI.Start.AuthenticationActivity;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -102,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() {
         auth.signOut();
+        logoutWithGoogle();
         clearUserPreferences();
         Intent intent = new Intent(this, AuthenticationActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -115,23 +121,14 @@ public class MainActivity extends AppCompatActivity {
         rxSharedPreferences.getString("email").delete();
     }
 
-    /*
+
     private void logoutWithGoogle(){
-        googleSignInClient.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                auth.signOut();
-                clearUserPreferences();
-                Intent intent = new Intent();
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id)) // Get Web Client ID from Firebase
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(FirebaseApp.getInstance().getApplicationContext(), gso);
+        googleSignInClient.signOut();
     }
-     */
+
 }
