@@ -14,7 +14,7 @@ public class Category implements Serializable {
     @SerializedName("strCategoryDescription")
     String categoryDescription;
 
-    public Category(String categoryId,String categoryImage, String categoryTitle, String categoryDescription) {
+    public Category(String categoryId, String categoryImage, String categoryTitle, String categoryDescription) {
         this.categoryId = categoryId;
         this.categoryImage = categoryImage;
         this.categoryTitle = categoryTitle;

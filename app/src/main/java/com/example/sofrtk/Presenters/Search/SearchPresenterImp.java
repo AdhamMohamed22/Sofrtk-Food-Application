@@ -41,6 +41,7 @@ public class SearchPresenterImp implements SearchPresenter {
                         error -> searchView.showIngredientsError(error.getMessage())
                 );
     }
+
     @Override
     public void setCategories() {
         repository.getCategories()

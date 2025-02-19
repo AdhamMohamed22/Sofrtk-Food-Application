@@ -121,7 +121,7 @@ public class SignUpFragment extends Fragment {
 
             if(passwordTextField.getText().length()>=6 && confirmPasswordTextField.getText().length()>=6){
                 if(!passwordTextField.getText().toString().equals(confirmPasswordTextField.getText().toString())){
-                    confirmPasswordTextField.setError("Password Must Be The Same");
+                    confirmPasswordTextField.setError(getString(R.string.password_must_be_the_same));
                     isValid = false;
                 }
             }
@@ -139,21 +139,21 @@ public class SignUpFragment extends Fragment {
     }
     public void validateEmptyEditText(EditText field){
         if(field.getText().toString().trim().isEmpty()){
-            field.setError("This Field Cannot Be Empty");
+            field.setError(getString(R.string.this_field_cannot_be_empty));
             isValid = false;
         }
     }
 
     public void validateLengthEditText(EditText field,int length){
         if(field.getText().length()<length){
-            field.setError("This Field Cannot Be Less Than " + length + " Characters");
+            field.setError(getString(R.string.this_field_cannot_be_less_than) + length + getString(R.string.characters));
             isValid = false;
         }
     }
 
     public void validateEmailEditText(EditText field){
         if (!Patterns.EMAIL_ADDRESS.matcher(field.getText().toString().trim()).matches()) {
-            field.setError("Invalid Email Format");
+            field.setError(getString(R.string.invalid_email_format));
             isValid = false;
         }
     }

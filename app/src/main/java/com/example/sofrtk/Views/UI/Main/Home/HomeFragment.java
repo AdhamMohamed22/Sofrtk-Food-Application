@@ -85,9 +85,9 @@ public class HomeFragment extends Fragment implements HomeView , NetworkConnecti
         userName = view.findViewById(R.id.userName);
 
         if (rxSharedPreferences.getBoolean("isLoggedIn", false).get()) {
-            userName.setText("Welcome! " + rxSharedPreferences.getString("email").get());
+            userName.setText(getString(R.string.welcome) + rxSharedPreferences.getString("email").get());
         } else {
-            userName.setText("Welcome! Guest");
+            userName.setText(R.string.welcome_guest);
         }
 
         Firebase.getInstance().updateFavouriteMeals(rxSharedPreferences.getString("userId").get(),requireContext());

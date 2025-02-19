@@ -22,19 +22,35 @@ public class FoodLocalDataSource {
         mealDAO = AppDB.getInstance(context).getMealDAO();
     }
 
-    public static FoodLocalDataSource getInstance(Context context){
-        if(foodLocalDataSource == null){
+    public static FoodLocalDataSource getInstance(Context context) {
+        if (foodLocalDataSource == null) {
             foodLocalDataSource = new FoodLocalDataSource(context);
         }
         return foodLocalDataSource;
     }
 
-    public Observable<List<FavouriteMeal>> getFavouriteMeals(String userId){ return mealDAO.getFavouriteMeals(userId);}
-    public Completable insertFavouriteMeal(FavouriteMeal favouriteMeal){ return mealDAO.insertFavouriteMeal(favouriteMeal);}
-    public Completable deleteFavouriteMeal(FavouriteMeal favouriteMeal){ return mealDAO.deleteFavouriteMeal(favouriteMeal);}
+    public Observable<List<FavouriteMeal>> getFavouriteMeals(String userId) {
+        return mealDAO.getFavouriteMeals(userId);
+    }
 
-    public Observable<List<PlanMeal>> getPlanMeals(String userId,String mealDate){ return mealDAO.getPlanMeals(userId,mealDate);}
-    public Completable insertPlanMeal(PlanMeal planMeal){ return mealDAO.insertPlanMeal(planMeal);}
-    public Completable deletePlanMeal(PlanMeal planMeal){ return mealDAO.deletePlanMeal(planMeal);}
+    public Completable insertFavouriteMeal(FavouriteMeal favouriteMeal) {
+        return mealDAO.insertFavouriteMeal(favouriteMeal);
+    }
+
+    public Completable deleteFavouriteMeal(FavouriteMeal favouriteMeal) {
+        return mealDAO.deleteFavouriteMeal(favouriteMeal);
+    }
+
+    public Observable<List<PlanMeal>> getPlanMeals(String userId, String mealDate) {
+        return mealDAO.getPlanMeals(userId, mealDate);
+    }
+
+    public Completable insertPlanMeal(PlanMeal planMeal) {
+        return mealDAO.insertPlanMeal(planMeal);
+    }
+
+    public Completable deletePlanMeal(PlanMeal planMeal) {
+        return mealDAO.deletePlanMeal(planMeal);
+    }
 
 }

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class FavouritePresenterImp implements FavouritePresenter{
+public class FavouritePresenterImp implements FavouritePresenter {
     FavouriteView favouriteView;
     Repository repository;
     RxSharedPreferences rxSharedPreferences;
@@ -43,18 +43,18 @@ public class FavouritePresenterImp implements FavouritePresenter{
 
     @Override
     public void deleteFavouriteMeal(FavouriteMeal favouriteMeal) {
-        Firebase.getInstance().deleteFavouriteMeal(favouriteMeal,rxSharedPreferences.getString("userId").get(),favouriteMeal.getMealId())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                repository.deleteFavouriteMeal(favouriteMeal)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(
-                                                () -> favouriteView.deleteFavouriteMeals(favouriteMeal),
-                                                error -> favouriteView.deleteFavouriteMealsError(error.getMessage())
-                                        );
-                            }
-                        });
+        Firebase.getInstance().deleteFavouriteMeal(favouriteMeal, rxSharedPreferences.getString("userId").get(), favouriteMeal.getMealId())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        repository.deleteFavouriteMeal(favouriteMeal)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                        () -> favouriteView.deleteFavouriteMeals(favouriteMeal),
+                                        error -> favouriteView.deleteFavouriteMealsError(error.getMessage())
+                                );
+                    }
+                });
     }
 }

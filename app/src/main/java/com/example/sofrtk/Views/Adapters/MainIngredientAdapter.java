@@ -37,7 +37,7 @@ public class MainIngredientAdapter extends RecyclerView.Adapter<MainIngredientAd
     @Override
     public MainIngridentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.main_ingredient_item,parent,false);
+        View view = inflater.inflate(R.layout.main_ingredient_item, parent, false);
         MainIngridentViewHolder myviewHolder = new MainIngridentViewHolder(view);
         return myviewHolder;
     }
@@ -68,7 +68,7 @@ public class MainIngredientAdapter extends RecyclerView.Adapter<MainIngredientAd
         notifyDataSetChanged();
     }
 
-    class MainIngridentViewHolder extends RecyclerView.ViewHolder{
+    class MainIngridentViewHolder extends RecyclerView.ViewHolder {
         ImageView mainIngredientImageView;
         TextView mainIngredientNameTxt;
         CardView mainIngredientCard;
@@ -82,7 +82,7 @@ public class MainIngredientAdapter extends RecyclerView.Adapter<MainIngredientAd
     }
 
     public interface OnItemClickListener {
-        public void onClicks(String filterName);
+        void onClicks(String filterName);
     }
 }
 

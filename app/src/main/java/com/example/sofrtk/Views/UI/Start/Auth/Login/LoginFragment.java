@@ -113,14 +113,14 @@ public class LoginFragment extends Fragment {
 
     public void validateEmailEditText(EditText field){
         if (!Patterns.EMAIL_ADDRESS.matcher(field.getText().toString().trim()).matches()) {
-            field.setError("Invalid Email Format");
+            field.setError(getString(R.string.invalid_email_format));
             isValid = false;
         }
     }
 
     public void validateLengthEditText(EditText field,int length){
         if(field.getText().length()<length){
-            field.setError("This Field Cannot Be Less Than " + length + " Characters");
+            field.setError(getString(R.string.this_field_cannot_be_less_than) + length + getString(R.string.characters));
             isValid = false;
         }
     }
