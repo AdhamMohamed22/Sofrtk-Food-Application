@@ -40,12 +40,20 @@
         android:id="@+id/favouriteFragment"
         android:name="com.example.sofrtk.Views.UI.Main.Favourite.FavouriteFragment"
         android:label="fragment_favourite"
-        tools:layout="@layout/fragment_favourite" />
+        tools:layout="@layout/fragment_favourite" >
+        <action
+            android:id="@+id/action_favouriteFragment_to_detailedMealFragment"
+            app:destination="@id/detailedMealFragment" />
+    </fragment>
     <fragment
         android:id="@+id/planFragment"
         android:name="com.example.sofrtk.Views.UI.Main.Plan.PlanFragment"
         android:label="fragment_plan"
-        tools:layout="@layout/fragment_plan" />
+        tools:layout="@layout/fragment_plan" >
+        <action
+            android:id="@+id/action_planFragment_to_detailedMealFragment"
+            app:destination="@id/detailedMealFragment" />
+    </fragment>
     <fragment
         android:id="@+id/filteredMealsFragment"
         android:name="com.example.sofrtk.Views.UI.Main.FilteredMeals.FilteredMealsFragment"

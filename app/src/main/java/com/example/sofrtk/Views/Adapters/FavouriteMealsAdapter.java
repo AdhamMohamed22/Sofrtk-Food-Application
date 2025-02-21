@@ -14,10 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.sofrtk.DB.Model.FavouriteMeal;
-import com.example.sofrtk.Models.DTOs.FilterMeal;
+import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAdapter.FavouriteMealsViewHolder> {
@@ -47,10 +46,13 @@ public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAd
     public void onBindViewHolder(@NonNull FavouriteMealsAdapter.FavouriteMealsViewHolder holder, int position) {
         FavouriteMeal currentFavouriteMeal = favouriteMealsList.get(position);
         holder.favouriteMealNameTxt.setText(currentFavouriteMeal.getMeal().getStrMeal());
-        Glide.with(context).load(currentFavouriteMeal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(200, 200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.favouriteMealImageView);
+        Glide.with(context).load(currentFavouriteMeal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(200, 200)).into(holder.favouriteMealImageView);
 
         holder.unFavouriteCardView.setOnClickListener(v -> {
-            onItemClickListener.onClicks(currentFavouriteMeal);
+            onItemClickListener.onRemoveClicks(currentFavouriteMeal);
+        });
+        holder.favouriteMealCard.setOnClickListener(v -> {
+            onItemClickListener.onClicks(currentFavouriteMeal.randomMeal);
         });
     }
 
@@ -74,16 +76,19 @@ public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAd
         ImageView favouriteMealImageView;
         TextView favouriteMealNameTxt;
         CardView unFavouriteCardView;
+        CardView favouriteMealCard;
 
         public FavouriteMealsViewHolder(@NonNull View itemView) {
             super(itemView);
             favouriteMealImageView = itemView.findViewById(R.id.favouriteMealImageView);
             favouriteMealNameTxt = itemView.findViewById(R.id.favouriteMealNameTxt);
             unFavouriteCardView = itemView.findViewById(R.id.unFavouriteCardView);
+            favouriteMealCard = itemView.findViewById(R.id.favouriteMealCard);
         }
     }
 
     public interface OnItemClickListener {
-        void onClicks(FavouriteMeal favouriteMeal);
+        void onRemoveClicks(FavouriteMeal favouriteMeal);
+        void onClicks(RandomMeal randomMeal);
     }
 }

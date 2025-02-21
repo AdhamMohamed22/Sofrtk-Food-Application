@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,12 +19,14 @@ import android.widget.Toast;
 
 import com.example.sofrtk.DB.Model.FavouriteMeal;
 import com.example.sofrtk.DB.Model.PlanMeal;
+import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Presenters.Plan.PlanPresenterImp;
 import com.example.sofrtk.R;
 import com.example.sofrtk.Views.Adapters.DateAdapter;
 import com.example.sofrtk.Views.Adapters.FavouriteMealsAdapter;
 import com.example.sofrtk.Views.Adapters.PlanMealsAdapter;
+import com.example.sofrtk.Views.UI.Main.Home.HomeFragmentDirections;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import java.text.SimpleDateFormat;
@@ -104,8 +107,13 @@ public class PlanFragment extends Fragment implements PlanView{
 
         planMealsAdapter.setOnItemClickListener(new PlanMealsAdapter.OnItemClickListener() {
             @Override
-            public void onClicks(PlanMeal planMeal) {
+            public void onRemoveClicks(PlanMeal planMeal) {
                 planPresenter.deletePlanMeal(planMeal);
+            }
+
+            @Override
+            public void onClicks(RandomMeal randomMeal) {
+                navigateToDetailedMealFragment(randomMeal.getIdMeal(),randomMeal);
             }
         });
     }
@@ -145,5 +153,8 @@ public class PlanFragment extends Fragment implements PlanView{
         }
 
         return dates;
+    }
+    public void navigateToDetailedMealFragment(String id, RandomMeal randomMeal){
+        Navigation.findNavController(requireView()).navigate(PlanFragmentDirections.actionPlanFragmentToDetailedMealFragment(id,randomMeal));
     }
 }

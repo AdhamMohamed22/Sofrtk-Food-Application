@@ -15,6 +15,7 @@ public class FavouriteMeal {
     public String userId;
     @NonNull
     public String mealId;
+
     public RandomMeal randomMeal;
 
     public FavouriteMeal() {

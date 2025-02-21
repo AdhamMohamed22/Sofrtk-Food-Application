@@ -133,7 +133,7 @@ public class DetailedMealFragment extends Fragment implements DetailedMealView{
 
     @Override
     public void showMealDetails(RandomMeal meal) {
-        Glide.with(requireView()).load(meal.getStrMealThumb()).apply(new RequestOptions().override(400, 400)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(detailedMealImage);
+        Glide.with(requireView()).load(meal.getStrMealThumb()).apply(new RequestOptions().override(400, 400)).into(detailedMealImage);
         detailedMealNameTxt.setText(meal.getStrMeal());
         detailedMealAreaTxt.setText(meal.getStrArea());
         stepsTxtArea.setText(meal.getStrInstructions());

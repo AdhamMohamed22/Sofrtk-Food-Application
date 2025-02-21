@@ -13,12 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.sofrtk.DB.Model.FavouriteMeal;
 import com.example.sofrtk.DB.Model.PlanMeal;
-import com.example.sofrtk.Models.DTOs.FilterMeal;
+import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.PlanMealsViewHolder> {
@@ -48,10 +46,13 @@ public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.Plan
     public void onBindViewHolder(@NonNull PlanMealsViewHolder holder, int position) {
         PlanMeal currentPlanMeal = planMealsList.get(position);
         holder.planMealNameTxt.setText(currentPlanMeal.getMeal().getStrMeal());
-        Glide.with(context).load(currentPlanMeal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(200, 200)).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).into(holder.planMealImageView);
+        Glide.with(context).load(currentPlanMeal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(200, 200)).into(holder.planMealImageView);
 
         holder.unPlanCardView.setOnClickListener(v -> {
-            onItemClickListener.onClicks(currentPlanMeal);
+            onItemClickListener.onRemoveClicks(currentPlanMeal);
+        });
+        holder.planMealCard.setOnClickListener(v -> {
+            onItemClickListener.onClicks(currentPlanMeal.meal);
         });
     }
 
@@ -75,16 +76,19 @@ public class PlanMealsAdapter extends RecyclerView.Adapter<PlanMealsAdapter.Plan
         ImageView planMealImageView;
         TextView planMealNameTxt;
         CardView unPlanCardView;
+        CardView planMealCard;
 
         public PlanMealsViewHolder(@NonNull View itemView) {
             super(itemView);
             planMealImageView = itemView.findViewById(R.id.planMealImageView);
             planMealNameTxt = itemView.findViewById(R.id.planMealNameTxt);
             unPlanCardView = itemView.findViewById(R.id.unPlanCardView);
+            planMealCard = itemView.findViewById(R.id.planMealCard);
         }
     }
 
     public interface OnItemClickListener {
-        void onClicks(PlanMeal planMeal);
+        void onRemoveClicks(PlanMeal planMeal);
+        void onClicks(RandomMeal randomMeal);
     }
 }

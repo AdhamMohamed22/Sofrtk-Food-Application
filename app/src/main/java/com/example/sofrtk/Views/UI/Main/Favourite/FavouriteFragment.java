@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,10 +19,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.sofrtk.DB.Model.FavouriteMeal;
+import com.example.sofrtk.Models.DTOs.RandomMeal;
 import com.example.sofrtk.Models.Repository.Repository;
 import com.example.sofrtk.Presenters.Favourite.FavouritePresenterImp;
 import com.example.sofrtk.R;
 import com.example.sofrtk.Views.Adapters.FavouriteMealsAdapter;
+import com.example.sofrtk.Views.UI.Main.Home.HomeFragmentDirections;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import java.util.ArrayList;
@@ -89,8 +92,13 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
         }
         favouriteMealsAdapter.setOnItemClickListener(new FavouriteMealsAdapter.OnItemClickListener() {
             @Override
-            public void onClicks(FavouriteMeal favouriteMeal) {
+            public void onRemoveClicks(FavouriteMeal favouriteMeal) {
                 favouritePresenter.deleteFavouriteMeal(favouriteMeal);
+            }
+
+            @Override
+            public void onClicks(RandomMeal randomMeal) {
+                navigateToDetailedMealFragment(randomMeal.getIdMeal(), randomMeal);
             }
         });
     }
@@ -114,5 +122,9 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
     @Override
     public Activity getViewActivity() {
         return requireActivity();
+    }
+
+    public void navigateToDetailedMealFragment(String id, RandomMeal randomMeal){
+        Navigation.findNavController(requireView()).navigate(FavouriteFragmentDirections.actionFavouriteFragmentToDetailedMealFragment(randomMeal.getIdMeal(), randomMeal));
     }
 }
